@@ -1,4 +1,4 @@
-export default function Board() {
+export function Board() {
   return (
     <main>
       {/* <AppBar /> */}
