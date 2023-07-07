@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ovveriding some Tailwind preflight styles */
+/* overriding some Tailwind preflight styles */
 @layer base {
   html:focus-within {
     @apply scroll-smooth;
