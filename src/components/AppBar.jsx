@@ -7,7 +7,7 @@ export function AppBar() {
   return (
     <FlexLayout
       as="nav"
-      className="items-center border border-light-lines px-6"
+      className="w-full items-center border border-light-lines px-6"
     >
       <h2 className="text-heading-xl">{boardName}</h2>
       <Button variant="primary" size="large" className="mr-6 ml-auto">

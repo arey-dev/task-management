@@ -5,7 +5,7 @@ export function Logo() {
   return (
     <FlexLayout
       as="header"
-      className="w-auto items-center border-b border-l border-light-lines px-8"
+      className="items-center border-b border-l border-light-lines px-8"
     >
       <img src={icon} alt="Kanban Logo" />
       <h1 className="sr-only">Kanban</h1>
