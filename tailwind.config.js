@@ -8,13 +8,13 @@ export default {
       "danger": "#EA5555",
       "on-danger": "#FFFFFF",
       "on-primary": "#FFFFFF",
+      "on-background": "#828FA3",
+      "on-secondary": "#635FC7",
       "light": {
         "secondary": "#635FC71A",
         "surface": "#FFFFFF",
         "background": "#F4F7FD",
         "lines": "#E4EBFA",
-        "on-secondary": "#635FC7",
-        "on-background": "#828FA3",
         "on-surface": "#000112",
       },
       "dark": {
@@ -22,8 +22,6 @@ export default {
         "surface": "#2B2C37",
         "background": "#20212C",
         "lines": "3E3F4E",
-        "on-secondary": "#635FC7",
-        "on-background": "#828FA3",
         "on-surface": "#FFFFFF",
       },
       "hover": {
