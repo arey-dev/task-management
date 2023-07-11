@@ -25,7 +25,7 @@ export const Button = forwardRef(function Button(
     type = "button",
     className,
     variant = "primary",
-    size = "normal",
+    size = "small",
     disabled = false,
     ...props
   },
