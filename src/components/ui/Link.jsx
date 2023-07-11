@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import boardIcon from "../../assets/icon-board.svg";
 
 const classes = {
-  base: "block text-on-background rounded-full transition ease-in-out duration-300 py-[0.875rem] pl-[3.25rem] text-heading-md text-start focus:outline-none focus:ring-1 focus:ring-primary",
+  base: "block text-on-background rounded-full transition ease-in-out duration-300 text-heading-md text-start pl-[3.25rem] py-[0.875rem] focus:outline-none focus:ring-1 focus:ring-primary",
   active: "bg-primary text-on-primary",
   pending: "bg-hover-primary text-on-primary",
 };
