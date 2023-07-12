@@ -2,9 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-nav ul li a:hover {
+nav a:hover {
   background-color: theme("colors.light.secondary");
   color: theme("colors.on-secondary");
+}
+
+nav a.active {
+  background-color: theme("colors.primary");
+  color: theme("colors.on-primary");
+}
+
+nav a.pending {
+  background-color: theme("colors.hover.secondary");
+  color: theme("colors.on-primary");
 }
 
 /* overriding some Tailwind preflight styles */
@@ -62,5 +72,11 @@ nav ul li a:hover {
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+  }
+}
+
+@layer utilities {
+  .task-shadow {
+    box-shadow: 0px 4px 6px 0px rgba(54, 78, 126, 0.1);
   }
 }

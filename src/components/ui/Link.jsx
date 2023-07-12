@@ -9,14 +9,15 @@ const classes = {
   pending: "bg-hover-primary text-on-primary",
 };
 
-export function Link({ to, title, status, className }) {
+export function Link({ to, title, className }) {
   return (
     <NavLink
       to={to}
       className={twJoin(
         classes.base,
-        status?.isActive && classes.active,
-        status?.isPending && classes.pending,
+        (isActive, isPending) => {
+          isPending ? "pending" : isActive ? "active" : "";
+        },
         className
       )}
     >
