@@ -4,7 +4,7 @@ export function BoardNav() {
   const boardCount = 3;
 
   return (
-    <nav className="w-[18.75rem] pt-4 border-x border-light-lines bg-light-surface">
+    <nav className="min-w-[18.75rem] pt-4 border-x border-light-lines bg-light-surface">
       <h2 className="text-heading-sm text-on-background ml-8 mb-[1.125rem]">
         All BOARDS ({boardCount})
       </h2>
