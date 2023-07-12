@@ -1,3 +1,4 @@
 import { Board } from "./Board";
+import { Root } from "./Root";
 
-export { Board };
+export { Root, Board };

@@ -1,11 +1,19 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Root } from "./routes";
 import { Board } from "./routes";
 
 const router = createBrowserRouter(
   [
     {
       path: "/",
-      element: <Board />,
+      element: <Root />,
+      // errorElement: 
+      children: [
+        {
+          path: "board/:boardId",
+          element: <Board/>
+        }
+      ]
     },
   ],
   { basename: "/task-management/" }
