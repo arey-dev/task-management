@@ -1,27 +1,18 @@
+/* eslint-disable react/prop-types */
 import { Link } from "./ui/Link";
 
-export function BoardNav() {
-  const boardCount = 3;
-
+export function BoardNav({ boards }) {
   return (
     <nav className="min-w-[18.75rem] pt-4 border-x border-light-lines bg-light-surface">
       <h2 className="text-heading-sm text-on-background ml-8 mb-[1.125rem]">
-        All BOARDS ({boardCount})
+        All BOARDS ({boards.length})
       </h2>
       <ul className="overflow-hidden py-2">
-        <li className="relative right-6">
-          <Link
-            to="/board/platform-launch"
-            title="Platform Launch"
-            status={{ isActive: true, isPending: null }}
-          />
-        </li>
-        <li className="relative right-6">
-          <Link to="/board/platform-launch" title="Marketing Plan" />
-        </li>
-        <li className="relative right-6">
-          <Link to="board/platform-launch" title="Roadmap" />
-        </li>
+        {boards.map((board) => (
+          <li key={board.name} className="relative right-6">
+            <Link to={`/board/${board.name}`} title={board.name} />
+          </li>
+        ))}
         <li className="relative right-6">
           <Link
             to="board/platform-launch"

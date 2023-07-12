@@ -1,15 +1,15 @@
+/* eslint-disable react/prop-types */
 import { Button } from "./ui/Button";
 import ellipsis from "../assets/icon-vertical-ellipsis.svg";
 import { Flex } from "./Flex";
 
-export function AppBar() {
-  const boardName = "Platform Launch";
+export function AppBar({ boardTitle }) {
   return (
     <Flex
       as="nav"
       className="w-full items-center border border-light-lines px-6 bg-light-surface"
     >
-      <h2 className="text-heading-xl">{boardName}</h2>
+      <h2 className="text-heading-xl">{boardTitle}</h2>
       <Button variant="primary" size="large" className="mr-6 ml-auto">
         + Add New Task
       </Button>
