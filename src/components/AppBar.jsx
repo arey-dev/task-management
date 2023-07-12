@@ -5,7 +5,7 @@ import { FlexLayout } from "./FlexLayout";
 export function AppBar() {
   const boardName = "Platform Launch";
   return (
-    <FlexLayout
+    <Flex
       as="nav"
       className="w-full items-center border border-light-lines px-6 bg-light-surface"
     >
@@ -14,6 +14,6 @@ export function AppBar() {
         + Add New Task
       </Button>
       <img className="cursor-pointer" src={ellipsis} alt="menu" />
-    </FlexLayout>
+    </Flex>
   );
 }

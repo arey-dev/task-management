@@ -3,12 +3,12 @@ import { FlexLayout } from "./FlexLayout";
 
 export function Logo() {
   return (
-    <FlexLayout
+    <Flex
       as="header"
       className="bg-light-surface items-center border-b border-l border-light-lines px-8"
     >
       <img src={icon} alt="Kanban Logo" />
       <h1 className="sr-only">Kanban</h1>
-    </FlexLayout>
+    </Flex>
   );
 }
