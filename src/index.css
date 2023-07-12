@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+nav ul li a:hover {
+  background-color: theme("colors.light.secondary");
+  color: theme("colors.on-secondary");
+}
+
 /* overriding some Tailwind preflight styles */
 @layer base {
   html:focus-within {
