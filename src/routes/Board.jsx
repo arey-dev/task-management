@@ -1,4 +1,4 @@
-import { Flex } from "../components/FlexLayout";
+import { Flex } from "../components/Flex";
 import { Logo } from "../components/Logo";
 import { AppBar } from "../components/AppBar";
 import { Link } from "../components/ui/Link";

@@ -1,5 +1,5 @@
 import icon from "../assets/logo-dark.svg";
-import { Flex } from "./FlexLayout";
+import { Flex } from "./Flex";
 
 export function Logo() {
   return (

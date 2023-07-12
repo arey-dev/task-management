@@ -1,6 +1,6 @@
 import { Button } from "./ui/Button";
 import ellipsis from "../assets/icon-vertical-ellipsis.svg";
-import { Flex } from "./FlexLayout";
+import { Flex } from "./Flex";
 
 export function AppBar() {
   const boardName = "Platform Launch";

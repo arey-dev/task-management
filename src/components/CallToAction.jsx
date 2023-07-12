@@ -1,4 +1,4 @@
-import { Flex } from "./FlexLayout";
+import { Flex } from "./Flex";
 import { Button } from "./ui/Button";
 
 export function CallToAction() {
