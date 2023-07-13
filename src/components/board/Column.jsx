@@ -3,19 +3,14 @@ import { ColumnHeader } from "./ColumnHeader";
 import { Task } from "./Task";
 import { TasksContainer } from "./TasksContainer";
 
-export function Column({ tasks, columnName }) {
+export function Column({ columnName, tasks }) {
   return (
     <section>
-      <ColumnHeader name={columnName} taskCount={4} />
+      <ColumnHeader name={columnName} taskCount={tasks.length} />
       <TasksContainer>
-        {/* {tasks.map((task) => (
-          <Task
-            key={task.name}
-            title="task.name"
-            subtaskCompleted={0}
-            subtaskCount={task.subtasks}
-          />
-        ))} */}
+        {tasks.map((task) => (
+          <Task key={task.title} task={task} />
+        ))}
       </TasksContainer>
     </section>
   );
