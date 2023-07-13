@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { ThemeSwitch } from "./ThemeSwitch";
 import { Link } from "./ui/Link";
 
 export function BoardNav({ boards }) {
@@ -21,6 +22,7 @@ export function BoardNav({ boards }) {
           />
         </li>
       </ul>
+      <ThemeSwitch />
     </nav>
   );
 }
