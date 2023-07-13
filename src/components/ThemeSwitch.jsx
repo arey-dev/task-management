@@ -6,7 +6,7 @@ export function ThemeSwitch() {
   return (
     <Flex
       center
-      className="w-100 h-12 bg-light-background rounded-lg gap-6 mx-6"
+      className="w-[calc(100%-1.5rem)] h-12 bg-light-background rounded-lg gap-6"
     >
       <img src={light} alt="light theme icon" />
       <label className="relative inline-flex items-center cursor-pointer">
