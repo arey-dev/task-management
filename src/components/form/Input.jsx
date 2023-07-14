@@ -36,7 +36,7 @@ export function Input(props) {
   return (
     <div className={twJoin("relative", className)}>
       {label && (
-        <Label id={id}>
+        <Label id={id} className={props["label-sr-only"] && "sr-only"}>
           {label} {required && "*"}
         </Label>
       )}
