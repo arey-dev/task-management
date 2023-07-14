@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -29,7 +30,9 @@ export default {
         secondary: "#635FC740",
         danger: "#FF9898",
       },
-      "neutral-1": "#828FA340",
+      // 0.25 opacity
+      "neutral-1": "#828FA340", 
+      // 0.10 opacity
       "neutral-2": "#828FA33F",
     },
     fontFamily: {
@@ -83,5 +86,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };
