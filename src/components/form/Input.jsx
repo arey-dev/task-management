@@ -4,7 +4,7 @@ import { twJoin } from "tailwind-merge";
 import { Label } from "./Label";
 
 const classes = {
-  base: "flex-1 appearance-none border w-full py-2 px-4 bg-light-surface text-light-on-surface text-body-lg focus:outline-none focus:ring-1focus:ring-primary focus:border-none placeholder-light-on-surface placeholder-opacity-25 border-neutral-1",
+  base: "flex-1 appearance-none border w-full py-2 px-4 bg-light-surface text-light-on-surface text-body-lg focus:outline-none focus:ring-inset-1 focus:ring-primary placeholder-light-on-surface placeholder-opacity-25 border-neutral-1",
   state: {
     error: "border-danger focus:ring-danger",
     disabled: "cursor-not-allowed bg-gray-100 shadow-inner text-gray-400",
