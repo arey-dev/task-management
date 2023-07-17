@@ -4,6 +4,7 @@ import { AppBar } from "../components/AppBar";
 import { BoardNav } from "../components/BoardNav";
 import data from "../data.json";
 import { Outlet } from "react-router-dom";
+import { AddTask } from "./AddTask";
 
 export function Root() {
   const { boards } = data;
@@ -18,6 +19,7 @@ export function Root() {
         <BoardNav boards={boards} />
         <Outlet context={boards[0]} />
       </Flex>
+      <AddTask />
     </>
   );
 }
