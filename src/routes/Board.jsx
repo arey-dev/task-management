@@ -1,4 +1,4 @@
-import { useOutletContext } from "react-router-dom";
+import { Outlet, useOutletContext } from "react-router-dom";
 import { Flex } from "../components/Flex";
 // import { CallToAction } from "../components/CallToAction";
 import { Column } from "../components/board/Column";
@@ -17,6 +17,7 @@ export function Board() {
         />
       ))}
       <AddColumnButton />
+      <Outlet />
       {/* <CallToAction /> */}
     </Flex>
   );

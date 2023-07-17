@@ -12,7 +12,7 @@ export function BoardNav({ boards }) {
       <ul className="overflow-hidden py-2">
         {boards.map((board) => (
           <li key={board.name} className="relative right-6">
-            <Link to={`/board/${board.name}`} title={board.name} />
+            <Link to={"/board/platform-launch"} title={board.name} />
           </li>
         ))}
         <li className="relative right-6">
