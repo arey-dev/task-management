@@ -17,7 +17,7 @@ export function BoardNav({ boards }) {
         ))}
         <li className="relative right-6">
           <Link
-            to="board/platform-launch"
+            to="board/add-board"
             title="+ Create New Board"
             className="text-primary"
           />

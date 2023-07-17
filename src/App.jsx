@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root } from "./routes";
 import { Board } from "./routes";
 import { AddTask } from "./routes/AddTask";
+import { AddBoard } from "./routes/AddBoard";
 
 const router = createBrowserRouter(
   [
@@ -19,6 +20,10 @@ const router = createBrowserRouter(
               element: <AddTask />,
             },
           ],
+        },
+        {
+          path: "/board/add-board",
+          element: <AddBoard />,
         },
       ],
     },
