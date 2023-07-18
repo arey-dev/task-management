@@ -2,18 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-nav a:hover {
+nav ul li a:hover {
   background-color: theme("colors.light.secondary");
   color: theme("colors.on-secondary");
-  cursor: pointer;
 }
 
-nav a.active {
+nav ul li a.active {
   background-color: theme("colors.primary");
   color: theme("colors.on-primary");
 }
 
-nav a.pending {
+nav ul li a.pending {
   background-color: theme("colors.hover.secondary");
   color: theme("colors.on-primary");
 }
