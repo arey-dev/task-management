@@ -9,7 +9,7 @@ const breakpoints = {
 };
 
 // Create a custom hook that returns the current screen size
-export function useResponsive() {
+export function useScreenSize() {
   // Get the initial window width
   // *********change innerWidth to clientWidth**********
   const [width, setWidth] = useState(window.innerWidth);

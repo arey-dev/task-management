@@ -1,8 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Root } from "./routes";
-import { Board } from "./routes";
-import { AddTask } from "./routes/AddTask";
-import { AddBoard } from "./routes/AddBoard";
+import { Root, Board, AddBoard, AddTask } from "./routes";
 
 const router = createBrowserRouter(
   [
