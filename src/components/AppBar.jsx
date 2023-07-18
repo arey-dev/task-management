@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import { Button } from "./ui/Button";
-import ellipsis from "../assets/icon-vertical-ellipsis.svg";
 import { Flex } from "./Flex";
 import { Link, useParams } from "react-router-dom";
 import { removeDelimiter } from "../utilities";
+import { DropdownMenu } from "./ui/DropdownMenu";
 
 export function AppBar() {
   // get boardId params from the URL;
@@ -26,13 +26,13 @@ export function AppBar() {
       <h2 className="text-heading-xl">{title}</h2>
       <Link
         to={`board/${boardId}/add-task`}
-        className="mr-6 ml-auto rounded-full"
+        className="mr-2 ml-auto rounded-full"
       >
         <Button variant="primary" size="large">
           + Add New Task
         </Button>
       </Link>
-      <img className="cursor-pointer" src={ellipsis} alt="menu" />
+      <DropdownMenu />
     </Flex>
   );
 }
