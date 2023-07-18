@@ -5,5 +5,5 @@ export function hypenateString(string) {
 
 export function removeDelimiter(string, delimiter) {
   // Split the string at each delimiter and then join with spaces
-  return string.split(delimiter).join();
+  return string.split(delimiter).join(" ");
 }
