@@ -2,6 +2,7 @@
 import { ThemeSwitch } from "./ThemeSwitch";
 import { Link } from "./ui/Link";
 import { HideButton } from "./HideButton";
+import { hypenateString } from "../utilities";
 
 export function BoardNav({ boards }) {
   return (
@@ -10,11 +11,14 @@ export function BoardNav({ boards }) {
         All BOARDS ({boards.length})
       </h2>
       <ul className="overflow-hidden py-2">
-        {boards.map((board) => (
-          <li key={board.name} className="relative right-6">
-            <Link to={"/board/platform-launch"} title={board.name} />
-          </li>
-        ))}
+        {boards.map((board) => {
+          const name = hypenateString(board.name);
+          return (
+            <li key={board.name} className="relative right-6">
+              <Link to={`/board/${name}`} title={name} />
+            </li>
+          );
+        })}
         <li className="relative right-6">
           <Link
             to="board/add-board"
