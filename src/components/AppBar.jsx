@@ -24,7 +24,10 @@ export function AppBar() {
       className="w-full items-center border border-light-lines px-6 bg-light-surface"
     >
       <h2 className="text-heading-xl">{title}</h2>
-      <Link to={`board/${boardId}/add-task`} className="mr-6 ml-auto">
+      <Link
+        to={`board/${boardId}/add-task`}
+        className="mr-6 ml-auto rounded-full"
+      >
         <Button variant="primary" size="large">
           + Add New Task
         </Button>
