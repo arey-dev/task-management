@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
+import { Link } from "./ui";
 import { ThemeSwitch } from "./ThemeSwitch";
-import { Link } from "./ui/Link";
 import { HideButton } from "./HideButton";
 import { hypenateString } from "../utilities";
 

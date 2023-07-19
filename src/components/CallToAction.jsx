@@ -1,5 +1,5 @@
 import { Flex } from "./Flex";
-import { Button } from "./ui/Button";
+import { Button } from "./ui";
 
 export function CallToAction() {
   return (

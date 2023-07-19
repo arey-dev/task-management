@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import { Button } from "./ui/Button";
+import { Button } from "./ui";
 import { Flex } from "./Flex";
-import { Link, useParams } from "react-router-dom";
+import { DropdownMenu } from "./ui";
 import { removeDelimiter } from "../utilities";
-import { DropdownMenu } from "./ui/DropdownMenu";
+import { Link, useParams } from "react-router-dom";
 
 export function AppBar() {
   // get boardId params from the URL;
