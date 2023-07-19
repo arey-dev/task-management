@@ -13,7 +13,7 @@ export function Checkbox({ checked, label, className, ...props }) {
       )}
     >
       <input
-        checked={checked}
+        defaultChecked={checked}
         id={id}
         type="checkbox"
         value=""
