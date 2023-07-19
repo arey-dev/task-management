@@ -9,7 +9,7 @@ export function Column({ columnName, tasks }) {
       <ColumnHeader name={columnName} taskCount={tasks.length} />
       <TasksContainer>
         {tasks.map((task) => (
-          <Task key={task.title} task={task} />
+          <Task key={task.title} column={columnName} task={task} />
         ))}
       </TasksContainer>
     </section>
