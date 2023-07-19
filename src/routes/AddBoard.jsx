@@ -1,8 +1,8 @@
 import { Form } from "react-router-dom";
-import { Modal } from "../components/Modal";
-import { Input } from "../components/form/Input";
-import { RemovableInput } from "../components/form/RemovableInput";
-import { Button } from "../components/ui/Button";
+import { Modal } from "../components";
+import { Input } from "../components/form";
+import { RemovableInput } from "../components/form";
+import { Button } from "../components/ui";
 import { useState } from "react";
 
 const initialColumns = [

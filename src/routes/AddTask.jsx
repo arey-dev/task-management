@@ -1,10 +1,10 @@
 import { Form } from "react-router-dom";
-import { Modal } from "../components/Modal";
-import { Input } from "../components/form/Input";
-import { TextArea } from "../components/form/TextArea";
-import { Button } from "../components/ui/Button";
-import { RemovableInput } from "../components/form/RemovableInput";
-import { Dropdown } from "../components/form/Dropdown";
+import { Modal } from "../components";
+import { Input } from "../components/form";
+import { TextArea } from "../components/form";
+import { Button } from "../components/ui";
+import { RemovableInput } from "../components/form";
+import { Dropdown } from "../components/form";
 import { useState } from "react";
 
 const initialDropdownOptions = [

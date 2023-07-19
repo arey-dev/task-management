@@ -1,7 +1,7 @@
-import { Flex } from "../components/Flex";
-import { Logo } from "../components/Logo";
-import { AppBar } from "../components/AppBar";
-import { BoardNav } from "../components/BoardNav";
+import { Flex } from "../components";
+import { Logo } from "../components";
+import { AppBar } from "../components";
+import { BoardNav } from "../components";
 import { Outlet } from "react-router-dom";
 import data from "../data.json";
 
