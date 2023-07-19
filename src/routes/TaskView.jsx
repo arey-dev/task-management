@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Form } from "react-router-dom";
+import { Form, useLoaderData } from "react-router-dom";
 import { Modal } from "../components";
 import { DropdownMenu } from "../components/ui";
 import { Checkbox, Dropdown } from "../components/form";
@@ -12,9 +12,11 @@ const initialDropdownOptions = [
 ];
 
 export function TaskView() {
-  const [selectedOption, setSelectedOption] = useState(
-    initialDropdownOptions[0]
-  );
+  const {
+    task: { title, description, status, subtasks },
+  } = useLoaderData();
+
+  const [selectedOption, setSelectedOption] = useState(status);
 
   const handleDropdownOptionChange = (option) => {
     setSelectedOption(option);
@@ -24,37 +26,23 @@ export function TaskView() {
     <Modal>
       <Form className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md">
         <header className="flex justify-between items-center">
-          <h2 className="text-heading-lg">
-            Research pricing points of various competitors and trial different
-            business models
-          </h2>
+          <h2 className="text-heading-lg">{title}</h2>
           <DropdownMenu />
         </header>
-        <p className="text-body-lg text-on-background">
-          We know what we&apos;re planning to build for version one. Now we need
-          to finalise the first pricing model we&apos;ll use. Keep iterating the
-          subtasks until we have a coherent proposition.
-        </p>
+        {description && (
+          <p className="text-body-lg text-on-background">{description}</p>
+        )}
         <section>
           <h3 className="text-body-md text-on-background mb-4">
-            Subtasks (2 of 3)
+            Subtasks {subtasks.filter((subtask) => subtask.isCompleted).length}{" "}
+            of {subtasks.length}
           </h3>
           <ul className="flex flex-col gap-2">
-            <li>
-              <Checkbox
-                label="Research competitor pricing and business models"
-                checked={true}
-              />
-            </li>
-            <li>
-              <Checkbox
-                label="Outline a business model that works for our solution"
-                checked={true}
-              />
-            </li>
-            <li>
-              <Checkbox label="Talk to potential customers about our proposed solution and ask for fair price expectancy" />
-            </li>
+            {subtasks.map((subtask) => (
+              <li key={subtask.subtaskId}>
+                <Checkbox label={subtask.title} checked={subtask.isCompleted} />
+              </li>
+            ))}
           </ul>
         </section>
         <Dropdown
