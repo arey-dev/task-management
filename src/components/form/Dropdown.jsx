@@ -6,15 +6,17 @@ import { Input } from "./Input";
 export function Dropdown({ options, selectedOption, onOptionChange }) {
   const [isOpen, setIsOpen] = useState(false);
 
+  const selected = selectedOption.value ? selectedOption.value : selectedOption;
+
   return (
     <div className="relative">
-      <Input label="Status" defaultValue={selectedOption.value} hidden />
+      <Input label="Status" defaultValue={selected} hidden />
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="flex py-2 px-4 justify-between items-center w-full border text-body-lg border-neutral-1 rounded-md outline-primary"
       >
-        {selectedOption.value}
+        {selected}
         <img src={chevronDown} alt="Chevron Down Icon" />
       </button>
       {isOpen && (
@@ -25,7 +27,7 @@ export function Dropdown({ options, selectedOption, onOptionChange }) {
               key={`${option.id}${option.value}`}
               onClick={() => {
                 onOptionChange(option);
-                setIsOpen(false)
+                setIsOpen(false);
               }}
             >
               {option.value}
