@@ -15,7 +15,7 @@ export function Root() {
         <Logo />
         <AppBar />
       </Flex>
-      <Flex className="h-[calc(100vh-6rem)] relative">
+      <Flex className="h-[calc(100vh-6rem)] relative border-x border-light-lines">
         <BoardNav boards={boards} />
         <Outlet context={boards} />
         <ShowSidebarBtn />

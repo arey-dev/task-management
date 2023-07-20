@@ -6,7 +6,7 @@ import { hypenateString } from "../utilities";
 
 export function BoardNav({ boards }) {
   return (
-    <nav className="min-w-[18.75rem] pt-4 pb-8 border-x border-light-lines bg-light-surface flex flex-col">
+    <nav className="min-w-[18.75rem] pt-4 pb-8 border-e border-light-lines bg-light-surface flex flex-col">
       <h2 className="text-heading-sm text-on-background ml-8 mb-[1.125rem]">
         All BOARDS ({boards.length})
       </h2>
