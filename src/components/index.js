@@ -6,5 +6,16 @@ import { Modal } from "./Modal";
 import { ThemeSwitch } from "./ThemeSwitch";
 import { Logo } from "./Logo";
 import { CallToAction } from "./CallToAction";
+import { ShowSidebarBtn } from "./ShowSidebarBtn";
 
-export { AppBar, BoardNav, Flex, HideButton, Modal, ThemeSwitch, CallToAction, Logo };
+export {
+  AppBar,
+  BoardNav,
+  Flex,
+  HideButton,
+  Modal,
+  ThemeSwitch,
+  CallToAction,
+  Logo,
+  ShowSidebarBtn,
+};

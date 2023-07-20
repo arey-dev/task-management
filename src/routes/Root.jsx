@@ -2,6 +2,7 @@ import { Flex } from "../components";
 import { Logo } from "../components";
 import { AppBar } from "../components";
 import { BoardNav } from "../components";
+import { ShowSidebarBtn } from "../components";
 import { Outlet } from "react-router-dom";
 import data from "../data.json";
 
@@ -14,9 +15,10 @@ export function Root() {
         <Logo />
         <AppBar />
       </Flex>
-      <Flex className="h-[calc(100vh-6rem)]">
+      <Flex className="h-[calc(100vh-6rem)] relative">
         <BoardNav boards={boards} />
         <Outlet context={boards} />
+        <ShowSidebarBtn />
       </Flex>
     </>
   );
