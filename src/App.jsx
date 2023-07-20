@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Root, Board, AddBoard, AddTask, TaskView } from "./routes";
-import data from "./data.json";
+import { Root, Board, AddBoard, AddTask, TaskView, Welcome } from "./routes";
 import { removeDelimiter } from "./utilities";
+import data from "./data.json";
 
 const router = createBrowserRouter(
   [
@@ -10,6 +10,7 @@ const router = createBrowserRouter(
       element: <Root />,
       // errorElement:
       children: [
+        { index: true, element: <Welcome /> },
         {
           path: "/board/:boardId",
           element: <Board />,
