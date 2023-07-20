@@ -3,11 +3,16 @@ import { Logo } from "../components";
 import { AppBar } from "../components";
 import { BoardNav } from "../components";
 import { ShowSidebarBtn } from "../components";
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import data from "../data.json";
 
 export function Root() {
   const { boards } = data;
+
+  const [showSidebar, setShowSidebar] = useState(true);
+
+  const handleSidebarToggle = () => setShowSidebar(!showSidebar);
 
   return (
     <>
@@ -16,9 +21,12 @@ export function Root() {
         <AppBar />
       </Flex>
       <Flex className="h-[calc(100vh-6rem)] relative border-x border-light-lines">
-        <BoardNav boards={boards} />
+        {showSidebar ? (
+          <BoardNav boards={boards} onHideSidebar={handleSidebarToggle} />
+        ) : (
+          <ShowSidebarBtn onHandleClick={handleSidebarToggle} />
+        )}
         <Outlet context={boards} />
-        <ShowSidebarBtn />
       </Flex>
     </>
   );
