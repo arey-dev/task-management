@@ -17,7 +17,7 @@ export function Root() {
   return (
     <>
       <Flex className="h-24">
-        <Logo />
+        <Logo isSidebarOpen={showSidebar} />
         <AppBar />
       </Flex>
       <Flex className="h-[calc(100vh-6rem)] relative border-x border-light-lines">
