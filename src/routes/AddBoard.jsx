@@ -35,7 +35,7 @@ export function AddBoard() {
         className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md"
       >
         <h2 className="text-lg">Add New Board</h2>
-        <Input label="Name" placeholder="e.g Web Design" />
+        <Input label="Name" name="name" placeholder="e.g Web Design" />
         <section>
           <h3 className="mb-2 text-body-md text-on-background">Columns</h3>
           {columns.map((column, index) => (
@@ -53,7 +53,7 @@ export function AddBoard() {
             variant="secondary"
             className="w-full"
           >
-            + Add New Subtask
+            + Add New Column
           </Button>
         </section>
         <Button>Create New Board</Button>
