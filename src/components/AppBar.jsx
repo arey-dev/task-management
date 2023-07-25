@@ -32,7 +32,7 @@ export function AppBar() {
           + Add New Task
         </Button>
       </Link>
-      <DropdownMenu />
+      <DropdownMenu className="right-1/2" />
     </Flex>
   );
 }

@@ -18,7 +18,7 @@ export function DropdownMenu({ className }) {
       {isOpen && (
         <div
           className={twJoin(
-            "absolute right-1/2 top-full w-48 bg-light-surface p-4 rounded-lg z-50 mt-[1.375rem] shadow-md",
+            "absolute top-full w-48 bg-light-surface p-4 rounded-lg z-50 mt-[1.375rem] shadow-md",
             className
           )}
         >
