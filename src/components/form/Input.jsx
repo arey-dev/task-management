@@ -2,11 +2,12 @@
 import { useId } from "react";
 import { twJoin } from "tailwind-merge";
 import { Label } from "./Label";
+import { useFormContext } from "react-hook-form";
 
 const classes = {
-  base: "flex-1 appearance-none border w-full py-2 px-4 bg-light-surface text-light-on-surface text-body-lg focus:outline-none focus:ring-inset-1 focus:ring-primary placeholder-light-on-surface placeholder-opacity-25 border-neutral-1",
+  base: "form-input flex-1 w-full py-2 px-4 bg-light-surface text-light-on-surface text-body-lg placeholder-light-on-surface placeholder-opacity-25 border-neutral-1 focus:border-primary",
   state: {
-    error: "border-danger focus:ring-danger",
+    error: "focus:ring-danger border-danger",
     disabled: "cursor-not-allowed bg-gray-100 shadow-inner text-gray-400",
   },
   rounded: {
@@ -18,13 +19,12 @@ const classes = {
   },
 };
 
-export function Input(props) {
+export function Input({ name, ...props }) {
+  const { register } = useFormContext();
   const {
     label,
     type = "text",
     error = false,
-    required = false,
-    disabled = false,
     className = "",
     errorText = "",
     rounded = "base",
@@ -37,7 +37,7 @@ export function Input(props) {
     <div className={twJoin("relative", className)}>
       {label && (
         <Label id={id} className={props["label-sr-only"] && "sr-only"}>
-          {label} {required && "*"}
+          {label}
         </Label>
       )}
       <input
@@ -47,13 +47,15 @@ export function Input(props) {
           classes.base,
           rounded && classes.rounded[rounded],
           error && classes.state.error,
-          disabled && classes.state.disabled,
         ])}
-        disabled={disabled}
-        required={required}
+        {...register(name, { required: true })}
         {...rest}
       />
-      {error && <p className="mt-2 text-sm text-red-600">{errorText}</p>}
+      {error && (
+        <p className="absolute right-4 bottom-2 text-body-lg text-danger">
+          {errorText}
+        </p>
+      )}
     </div>
   );
 }
