@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root, Board, AddBoard, AddTask, TaskView, Welcome } from "./routes";
+import { action as AddBoardAction } from "./routes/AddBoard";
 import { removeDelimiter } from "./utilities";
 import data from "./data.json";
 
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
       {
         path: "/board/add-board",
         element: <AddBoard />,
+        action: AddBoardAction,
       },
     ],
   },
