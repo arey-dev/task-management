@@ -1,4 +1,4 @@
-import { Form } from "react-router-dom";
+import { Form, useSubmit } from "react-router-dom";
 import { Modal } from "../../components";
 import { Input } from "../../components/form";
 import { RemovableInput } from "../../components/form";
@@ -17,6 +17,7 @@ export function AddBoard() {
   const methods = useForm();
   // multiple column state for board
   const [columns, setColumns] = useState(initialColumns);
+  const submit = useSubmit();
 
   // handler for adding a column for a board
   const handleAddColumn = () => {
@@ -33,26 +34,20 @@ export function AddBoard() {
     setColumns(columns.filter((column) => column.id !== id));
   };
 
-  const onSubmit = (data, e) => {
-    console.log(data);
-    e.preventDefault();
+  const onSubmit = (data) => {
+    submit(data, { method: "post", action: "/board/add-board" });
   };
 
   return (
     <Modal>
       <FormProvider {...methods}>
         <Form
-          method="post"
           className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <h2 className="text-lg">Add New Board</h2>
 
-          <Input
-            label="Name"
-            name="name"
-            placeholder="e.g Web Design"
-          />
+          <Input label="Name" name="name" placeholder="e.g Web Design" />
 
           <section>
             <h3 className="mb-2 text-body-md text-on-background">Columns</h3>
