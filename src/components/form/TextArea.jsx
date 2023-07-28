@@ -2,6 +2,7 @@
 import { useId } from "react";
 import { twJoin } from "tailwind-merge";
 import { Label } from "./Label";
+import { useFormContext } from "react-hook-form";
 
 const classes = {
   base: "flex-1 h-28 appearance-none border w-full py-2 px-4 bg-light-surface text-light-on-surface text-body-lg focus:outline-none focus:ring-1 focus:ring-primary  placeholder-light-on-surface placeholder-opacity-25 border-neutral-1",
@@ -15,7 +16,9 @@ const classes = {
   },
 };
 
-export function TextArea(props) {
+export function TextArea({ name, ...props }) {
+  const { register } = useFormContext();
+
   const {
     label,
     type = "text",
@@ -39,6 +42,7 @@ export function TextArea(props) {
           rounded && classes.rounded[rounded],
           noresize && classes.noResize,
         ])}
+        {...register(name)}
         {...rest}
       />
     </div>

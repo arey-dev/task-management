@@ -3,14 +3,17 @@ import { useState } from "react";
 import chevronDown from "../../assets/icon-chevron-down.svg";
 import { Input } from "./Input";
 
-export function Dropdown({ options, selectedOption, onOptionChange }) {
+export function Dropdown({ name, options, selectedOption, onOptionChange }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const selected = selectedOption.value ? selectedOption.value : selectedOption;
+  const selected = selectedOption?.value
+    ? selectedOption.value
+    : selectedOption;
 
   return (
     <div className="relative">
-      <Input label="Status" defaultValue={selected} hidden />
+      <Input label="Status" name={name} value={selected} />
+
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -19,6 +22,7 @@ export function Dropdown({ options, selectedOption, onOptionChange }) {
         {selected}
         <img src={chevronDown} alt="Chevron Down Icon" />
       </button>
+
       {isOpen && (
         <ul className="absolute left-0 top-full mt-3 dropdown-shadow flex flex-col gap-2 w-full bg-light-surface text-on-background text-body-lg p-4 rounded-md">
           {options.map((option) => (
@@ -26,6 +30,7 @@ export function Dropdown({ options, selectedOption, onOptionChange }) {
               className="hover:text-primary hover:cursor-pointer"
               key={`${option.id}${option.value}`}
               onClick={() => {
+                console.log(option);
                 onOptionChange(option);
                 setIsOpen(false);
               }}
