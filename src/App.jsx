@@ -1,7 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Board, AddTask, TaskView, Welcome } from "./routes";
+import { Board, TaskView, Welcome } from "./routes";
 import { Root, loader as RootLoader } from "./routes/Root";
 import { AddBoard, action as AddBoardAction } from "./routes/AddBoard";
+import { AddTask } from "./routes/AddTask";
 import { removeDelimiter } from "./utilities";
 import data from "./data.json";
 
