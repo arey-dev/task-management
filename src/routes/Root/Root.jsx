@@ -1,13 +1,14 @@
-import { Flex } from "../components";
-import { Logo } from "../components";
-import { AppBar } from "../components";
-import { BoardNav } from "../components";
-import { ShowSidebarBtn } from "../components";
+import { Flex } from "../../components";
+import { Logo } from "../../components";
+import { AppBar } from "../../components";
+import { BoardNav } from "../../components";
+import { ShowSidebarBtn } from "../../components";
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
-import data from "../data.json";
+import { Outlet, useLoaderData } from "react-router-dom";
+import data from "../../data.json";
 
 export function Root() {
+  const { boardList } = useLoaderData();
   const { boards } = data;
 
   const [showSidebar, setShowSidebar] = useState(true);
@@ -22,7 +23,7 @@ export function Root() {
       </Flex>
       <Flex className="h-[calc(100vh-6rem)] relative border-x border-light-lines">
         {showSidebar ? (
-          <BoardNav boards={boards} onHideSidebar={handleSidebarToggle} />
+          <BoardNav boards={boardList} onHideSidebar={handleSidebarToggle} />
         ) : (
           <ShowSidebarBtn onHandleClick={handleSidebarToggle} />
         )}

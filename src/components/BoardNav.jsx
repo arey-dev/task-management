@@ -15,7 +15,7 @@ export function BoardNav({ boards, onHideSidebar }) {
           const name = hypenateString(board.name);
           return (
             <li key={board.name} className="relative right-6">
-              <Link to={`/board/${name}`} title={name} />
+              <Link to={`/board/${name}`} title={board.name} />
             </li>
           );
         })}
