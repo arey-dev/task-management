@@ -52,9 +52,6 @@ export function AddBoard() {
             label="Name"
             name="name"
             placeholder="e.g Web Design"
-            required
-            // error={error}
-            // errorText={error ? "Can't be empty" : null}
           />
 
           <section>

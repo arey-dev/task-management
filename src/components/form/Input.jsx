@@ -5,9 +5,9 @@ import { Label } from "./Label";
 import { useFormContext } from "react-hook-form";
 
 const classes = {
-  base: "form-input flex-1 w-full py-2 px-4 bg-light-surface text-light-on-surface text-body-lg placeholder-light-on-surface placeholder-opacity-25 border-neutral-1 focus:border-primary",
+  base: "form-input flex-1 w-full py-2 px-4 bg-light-surface text-light-on-surface text-body-lg placeholder-light-on-surface placeholder-opacity-25 border-neutral-1 focus:ring-primary",
   state: {
-    error: "focus:ring-danger border-danger",
+    error: "!border-danger focus:!ring-danger",
     disabled: "cursor-not-allowed bg-gray-100 shadow-inner text-gray-400",
   },
   rounded: {
@@ -20,13 +20,14 @@ const classes = {
 };
 
 export function Input({ name, ...props }) {
-  const { register } = useFormContext();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
   const {
     label,
     type = "text",
-    error = false,
     className = "",
-    errorText = "",
     rounded = "base",
     ...rest
   } = props;
@@ -46,14 +47,14 @@ export function Input({ name, ...props }) {
         className={twJoin([
           classes.base,
           rounded && classes.rounded[rounded],
-          error && classes.state.error,
+          errors[name] && classes.state.error,
         ])}
-        {...register(name, { required: true })}
+        {...register(name, { required: "Can't be empty" })}
         {...rest}
       />
-      {error && (
+      {errors[name]?.message && (
         <p className="absolute right-4 bottom-2 text-body-lg text-danger">
-          {errorText}
+          {errors[name].message}
         </p>
       )}
     </div>
