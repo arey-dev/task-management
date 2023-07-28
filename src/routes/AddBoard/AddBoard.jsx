@@ -14,9 +14,11 @@ const initialColumns = [
 let nextColumnId = initialColumns.length;
 
 export function AddBoard() {
-  const methods = useForm();
+  const methods = useForm(); // react-hook-form
+
   // multiple column state for board
   const [columns, setColumns] = useState(initialColumns);
+
   const submit = useSubmit();
 
   // handler for adding a column for a board
@@ -35,6 +37,8 @@ export function AddBoard() {
   };
 
   const onSubmit = (data) => {
+    // programmatically submit a form for react-router
+    // to be in-sync with react-hook-form
     submit(data, { method: "post", action: "/board/add-board" });
   };
 
@@ -54,7 +58,7 @@ export function AddBoard() {
             {columns.map((column, index) => (
               <RemovableInput
                 key={column.id}
-                label={`subtask ${index}`}
+                label={`column ${index}`}
                 label-sr-only="true"
                 defaultValue={column.value}
                 placeholder={column.placeholder}
