@@ -1,9 +1,9 @@
 import { Outlet, useOutletContext, useParams } from "react-router-dom";
-import { Flex } from "../components";
+import { Flex } from "../../components";
 // import { CallToAction } from "../components/CallToAction";
-import { Column } from "../components/board";
-import { AddColumnButton } from "../components/board";
-import { removeDelimiter } from "../utilities";
+import { Column } from "../../components/board";
+import { AddColumnButton } from "../../components/board";
+import { removeDelimiter } from "../../utilities";
 
 export function Board() {
   // read data from parent component that is passed from Outlet

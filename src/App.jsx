@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Board, Welcome } from "./routes";
+import { Welcome } from "./routes";
 import { Root, loader as RootLoader } from "./routes/Root";
+import { Board, loader as BoardLoader } from "./routes/Board";
 import { AddBoard, action as AddBoardAction } from "./routes/AddBoard";
 import { AddTask } from "./routes/AddTask";
 import { TaskView, loader as TaskViewLoader } from "./routes/TaskView";
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
       {
         path: "/board/:boardId",
         element: <Board />,
+        loader: BoardLoader,
         children: [
           {
             path: "add-task",
