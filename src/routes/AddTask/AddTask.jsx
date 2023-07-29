@@ -1,4 +1,4 @@
-import { Form } from "react-router-dom";
+import { Form, useParams } from "react-router-dom";
 import { Modal } from "../../components";
 import { Input } from "../../components/form";
 import { TextArea } from "../../components/form";
@@ -22,12 +22,18 @@ const initialSubtasks = [
 let nextSubtasksId = initialSubtasks.length;
 
 export function AddTask() {
-  // fix status value
+  // react-hook-form
+  const methods = useForm({
+    defaultValues: {
+      status: initialDropdownOptions[0].value,
+    },
+  });
 
-  const methods = useForm(); // react-hook-form
+  const params = useParams(); // to read boardId params
 
-  // const submit = useSubmit();
+  const submit = useSubmit(); // to submit form by using react router
 
+  // set dropdown option (ui only)
   const [selectedOption, setSelectedOption] = useState(
     initialDropdownOptions[0]
   );
@@ -54,15 +60,18 @@ export function AddTask() {
 
   // handle for changing dropdown option
   const handleDropdownOptionChange = (option) => {
-    setSelectedOption(option);
+    setSelectedOption(option); // for ui
+    methods.setValue("status", option.value); // for set value of react-hook-form input
   };
 
   const onSubmit = (data) => {
     console.log(data);
-
-    // // programmatically submit a form for react-router
-    // // to be in-sync with react-hook-form
-    // submit(data, { method: "post", action: "/board/add-board" });
+    // programmatically submit a form for react-router
+    // to be in-sync with react-hook-form
+    submit(data, {
+      method: "post",
+      action: `/board/${params.boardId}/add-task`,
+    });
   };
 
   return (
@@ -93,10 +102,10 @@ export function AddTask() {
               {subtasks.map((subtask, index) => (
                 <RemovableInput
                   key={subtask.id}
-                  label={`subtask ${index}`}
+                  label={`subtask-${index}`}
                   label-sr-only="true"
                   placeholder={subtask?.placeholder}
-                  name={`subtask ${index}`}
+                  name={`subtask-${index}`}
                   onRemove={() => handleRemoveSubtask(subtask.id)}
                 />
               ))}

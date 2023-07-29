@@ -12,7 +12,7 @@ export function Dropdown({ name, options, selectedOption, onOptionChange }) {
 
   return (
     <div className="relative">
-      <Input label="Status" name={name} value={selected} />
+      <Input label="Status" name={name} hidden />
 
       <button
         type="button"
