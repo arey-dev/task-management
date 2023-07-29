@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import { Form, useLoaderData } from "react-router-dom";
-import { Modal } from "../components";
-import { DropdownMenu } from "../components/ui";
-import { Checkbox, Dropdown } from "../components/form";
+import { Modal } from "../../components";
+import { DropdownMenu } from "../../components/ui";
+import { Checkbox, Dropdown } from "../../components/form";
 import { useState } from "react";
 
 const initialDropdownOptions = [
