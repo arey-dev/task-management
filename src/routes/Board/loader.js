@@ -1,29 +1,31 @@
-import { getDocs, query, collection, where } from "firebase/firestore";
+import { getDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { removeDelimiter } from "../../utilities";
 
 export async function loader({ params }) {
-  // // the board we want to find
-  // const boardName = removeDelimiter(params.boardId);
+  // the board we want to find
+  const boardId = removeDelimiter(params.boardId);
 
-  // // reference to boards collection
-  // const boardsRef = collection(db, "boards");
-  // // query for boardId
-  // const boardQuery = query(boardsRef, where("name", "==", boardName));
-  // const boardSnap = await getDocs(boardQuery);
+  // reference to boards collection
+  const boardRef = doc(db, "boards", boardId);
 
-  // let boardRef;
-  // boardSnap.forEach((doc) => (boardRef = doc));
+  // query for boardId
+  const boardSnap = await getDoc(boardRef);
 
-  // const boardColumnList = [];
-  // const querySnapshot = await getDocs(
-  //   collection(db, `boards/${boardRef}/columns`)
-  // );
-  // querySnapshot.forEach((doc) => {
-  //   boardColumnList.push(doc.data());
-  // });
+  // return null if data doesn't exists
+  if (!boardSnap.exists()) {
+    return null;
+  }
 
-  // console.log(boardColumnList);
+  const board = boardSnap.data();
 
-  return null;
+  const columns = [];
+
+  for (const field in board) {
+    if (field !== "name") {
+      columns.push({ name: board[field] });
+    }
+  }
+
+  return { columns };
 }
