@@ -28,7 +28,7 @@ export function AppBar() {
         to={`board/${boardId}/add-task`}
         className="mr-2 ml-auto rounded-full"
       >
-        <Button variant="primary" size="large">
+        <Button variant="primary" disabled={true} size="large">
           + Add New Task
         </Button>
       </Link>

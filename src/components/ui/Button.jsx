@@ -4,7 +4,7 @@ import { twJoin } from "tailwind-merge";
 
 const classes = {
   base: "focus:outline-none transition ease-in-out duration-300 rounded-full cursor-pointer",
-  disabled: "opacity-50 cursor-not-allowed",
+  disabled: "opacity-50 !cursor-not-allowed",
   size: {
     small: "py-[0.5rem] px-4 text-body-lg font-bold",
     large: "py-[0.875rem] px-4 text-heading-md",
