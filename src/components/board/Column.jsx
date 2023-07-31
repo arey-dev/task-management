@@ -6,12 +6,14 @@ import { TasksContainer } from "./TasksContainer";
 export function Column({ columnName, tasks }) {
   return (
     <section className="w-[17.5rem] shrink-0">
-      <ColumnHeader name={columnName} taskCount={tasks.length} />
-      <TasksContainer>
-        {tasks.map((task) => (
-          <Task key={task.title} column={columnName} task={task} />
-        ))}
-      </TasksContainer>
+      <ColumnHeader name={columnName} taskCount={tasks ? tasks.length : 2} />
+      {tasks && (
+        <TasksContainer>
+          {tasks.map((task) => (
+            <Task key={task.title} column={columnName} task={task} />
+          ))}
+        </TasksContainer>
+      )}
     </section>
   );
 }
