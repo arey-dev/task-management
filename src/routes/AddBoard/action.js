@@ -1,26 +1,20 @@
-import { addDoc, collection } from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { redirect } from "react-router-dom";
+import { hypenateString } from "../../utilities";
 
 export async function action({ request }) {
-  // Get data from AddBaord Form
+  // Get data from AddBoard Form
   const formData = await request.formData();
-  const dataObject = Object.fromEntries(formData);
 
-  let boardRef; // used for creating subcollection
-  for (const data in dataObject) {
-    if (data === "name") {
-      // add data on collection
-      boardRef = await addDoc(collection(db, "boards"), {
-        name: dataObject[data],
-      });
-    } else {
-      // add data on subcollection
-      await addDoc(collection(db, `/boards/${boardRef.id}/columns`), {
-        name: dataObject[data],
-      });
-    }
-  }
+  // create object from FormData
+  const board = Object.fromEntries(formData);
+
+  // id for firestore document
+  const id = hypenateString(board.name);
+
+  // add doc to firestore
+  await setDoc(doc(db, "boards", id), board);
 
   return redirect("/");
 }
