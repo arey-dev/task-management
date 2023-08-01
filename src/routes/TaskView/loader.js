@@ -1,4 +1,4 @@
 
 export async function loader() {
-  return;
+  return null;
 }

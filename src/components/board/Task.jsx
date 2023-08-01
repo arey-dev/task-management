@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useNavigate, useParams } from "react-router-dom";
+import { hypenateString } from "../../utilities";
 
 export function Task({ task }) {
-  const { taskId, title, subtasks } = task;
+  const { title, subtasks } = task;
 
   const subtaskCompleted = subtasks.filter(
     (subtask) => subtask.isCompleted
@@ -16,7 +17,9 @@ export function Task({ task }) {
 
   return (
     <section
-      onClick={() => navigate(`/board/${boardId}/task/${taskId}`)}
+      onClick={() =>
+        navigate(`/board/${boardId}/task/${hypenateString(title)}`)
+      }
       className="bg-light-surface rounded-lg task-shadow px-4 py-6 last-of-type:last:mb-12 cursor-pointer text-light-on-surface hover:text-primary"
     >
       <h3 className="text-heading-md mb-2">{title}</h3>
