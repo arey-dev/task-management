@@ -1,4 +1,11 @@
-import { getDoc, doc } from "firebase/firestore";
+import {
+  getDoc,
+  doc,
+  query,
+  collection,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { db } from "../../firebase";
 import { removeDelimiter } from "../../utilities";
 
@@ -19,13 +26,34 @@ export async function loader({ params }) {
 
   const board = boardSnap.data();
 
+  // get board columns
   const columns = [];
-
   for (const field in board) {
     if (field !== "name") {
       columns.push({ name: board[field] });
     }
   }
 
-  return { columns };
+  // get board tasks
+  const tasks = {};
+  for (const column of columns) {
+    // create a array property in the object
+    // with key the same as column name
+    tasks[column.name] = [];
+
+    // query for tasks where status is the same as the column
+    const querySnapshot = await getDocs(
+      query(
+        collection(db, "boards", boardId, "tasks"),
+        where("status", "==", column.name)
+      )
+    );
+
+    // add each task on the array
+    querySnapshot.forEach((doc) => {
+      tasks[column.name].push(doc.data());
+    });
+  }
+
+  return { columns, tasks };
 }
