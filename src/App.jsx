@@ -25,7 +25,7 @@ const router = createBrowserRouter([
             action: AddTaskAction,
           },
           {
-            path: ":columnId/task/:taskId",
+            path: "task/:taskId",
             element: <TaskView />,
             loader: TaskViewLoader,
           },
