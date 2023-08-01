@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useNavigate, useParams } from "react-router-dom";
 
-export function Task({ task, column }) {
+export function Task({ task }) {
   const { taskId, title, subtasks } = task;
 
   const subtaskCompleted = subtasks.filter(
@@ -16,7 +16,7 @@ export function Task({ task, column }) {
 
   return (
     <section
-      onClick={() => navigate(`/board/${boardId}/${column}/task/${taskId}`)}
+      onClick={() => navigate(`/board/${boardId}/task/${taskId}`)}
       className="bg-light-surface rounded-lg task-shadow px-4 py-6 last-of-type:last:mb-12 cursor-pointer text-light-on-surface hover:text-primary"
     >
       <h3 className="text-heading-md mb-2">{title}</h3>
