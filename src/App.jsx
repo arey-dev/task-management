@@ -4,7 +4,11 @@ import { Root, loader as RootLoader } from "./routes/Root";
 import { Board, loader as BoardLoader } from "./routes/Board";
 import { AddBoard, action as AddBoardAction } from "./routes/AddBoard";
 import { AddTask, action as AddTaskAction } from "./routes/AddTask";
-import { TaskView, loader as TaskViewLoader } from "./routes/TaskView";
+import {
+  TaskView,
+  loader as TaskViewLoader,
+  action as TaskViewAction,
+} from "./routes/TaskView";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +32,7 @@ const router = createBrowserRouter([
             path: "task/:taskId",
             element: <TaskView />,
             loader: TaskViewLoader,
+            action: TaskViewAction,
           },
         ],
       },
