@@ -4,7 +4,7 @@ import ellipsis from "../../assets/icon-vertical-ellipsis.svg";
 import { Link } from "react-router-dom";
 import { twJoin } from "tailwind-merge";
 
-export function DropdownMenu({ className }) {
+export function DropdownMenu({ className, component = "Board" }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -27,13 +27,13 @@ export function DropdownMenu({ className }) {
             to="/"
             className="block text-body-lg text-on-background mb-4 cursor-pointer"
           >
-            Edit Board
+            Edit {component}
           </Link>
           <Link
             to="/"
             className="block text-body-lg text-danger cursor-pointer"
           >
-            Delete Board
+            Delete {component}
           </Link>
         </div>
       )}
