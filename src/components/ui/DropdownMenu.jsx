@@ -10,6 +10,7 @@ export function DropdownMenu({ className }) {
   return (
     <div className="relative flex flex-col justify-center items-center">
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="py-2 px-4 rounded-full hover:bg-hover-secondary transition ease-in-out duration-300"
       >
