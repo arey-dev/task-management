@@ -3,11 +3,12 @@ import { Button } from "./ui";
 import { Flex } from "./Flex";
 import { DropdownMenu } from "./ui";
 import { removeDelimiter } from "../utilities";
-import { Link, useParams } from "react-router-dom";
+import { Link, useMatch, useParams } from "react-router-dom";
 
 export function AppBar() {
   // get boardId params from the URL;
   const { boardId } = useParams();
+  const match = useMatch("/");
 
   let title;
   // remove delimeter if boardId exists from params
@@ -28,11 +29,11 @@ export function AppBar() {
         to={`board/${boardId}/add-task`}
         className="mr-2 ml-auto rounded-full"
       >
-        <Button variant="primary" size="large">
+        <Button variant="primary" disabled={match ? true : false} size="large">
           + Add New Task
         </Button>
       </Link>
-      <DropdownMenu className="right-1/2" />
+      <DropdownMenu match={match ? true : false} className="right-1/2" />
     </Flex>
   );
 }
