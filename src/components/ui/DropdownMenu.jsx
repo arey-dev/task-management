@@ -29,15 +29,17 @@ export function DropdownMenu({ match, className, component = "Board" }) {
             to={
               params.taskId
                 ? `/board/${params.boardId}/task/${params.taskId}/edit-task`
-                : "/"
+                : `/board/${params.boardId}/edit-board`
             }
             className="block text-body-lg text-on-background mb-4 cursor-pointer"
+            onClick={() => setIsOpen(false)}
           >
             Edit {component}
           </Link>
           <Link
             to="/"
             className="block text-body-lg text-danger cursor-pointer"
+            onClick={() => setIsOpen(false)}
           >
             Delete {component}
           </Link>

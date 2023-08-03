@@ -3,6 +3,7 @@ import { Welcome } from "./routes";
 import { Root, loader as RootLoader } from "./routes/Root";
 import { Board, loader as BoardLoader } from "./routes/Board";
 import { AddBoard, action as AddBoardAction } from "./routes/AddBoard";
+import { EditBoard } from "./routes/EditBoard";
 import { AddTask, action as AddTaskAction } from "./routes/AddTask";
 import { EditTask } from "./routes/EditTask";
 import {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
         path: "/board/add-board",
         element: <AddBoard />,
         action: AddBoardAction,
+      },
+      {
+        path: "board/:boardId/edit-board",
+        element: <EditBoard />,
       },
     ],
   },
