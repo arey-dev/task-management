@@ -36,7 +36,7 @@ export function TaskView() {
         <Form className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md">
           <header className="flex justify-between items-center">
             <h2 className="text-heading-lg">{title}</h2>
-            <DropdownMenu component="Task"/>
+            <DropdownMenu component="Task" />
           </header>
           {description && (
             <p className="text-body-lg text-on-background">{description}</p>

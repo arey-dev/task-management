@@ -4,6 +4,7 @@ import { Root, loader as RootLoader } from "./routes/Root";
 import { Board, loader as BoardLoader } from "./routes/Board";
 import { AddBoard, action as AddBoardAction } from "./routes/AddBoard";
 import { AddTask, action as AddTaskAction } from "./routes/AddTask";
+import { EditTask } from "./routes/EditTask";
 import {
   TaskView,
   loader as TaskViewLoader,
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
             element: <TaskView />,
             loader: TaskViewLoader,
             action: TaskViewAction,
+          },
+          {
+            path: "task/:taskId/edit-task",
+            element: <EditTask />,
           },
         ],
       },
