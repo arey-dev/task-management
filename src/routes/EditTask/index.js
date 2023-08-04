@@ -1,3 +1,4 @@
 import { EditTask } from "./EditTask";
+import { action } from "./action";
 
-export { EditTask };
+export { EditTask, action };
