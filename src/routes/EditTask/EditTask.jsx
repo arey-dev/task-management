@@ -1,4 +1,9 @@
-import { Form, useParams } from "react-router-dom";
+import {
+  Form,
+  useLocation,
+  useOutletContext,
+  useParams,
+} from "react-router-dom";
 import { Modal } from "../../components";
 import { Input } from "../../components/form";
 import { TextArea } from "../../components/form";
@@ -9,11 +14,6 @@ import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useSubmit } from "react-router-dom";
 
-const initialDropdownOptions = [
-  { id: 0, value: "Todo" },
-  { id: 1, value: "Doing" },
-];
-
 const initialSubtasks = [
   { id: 0, placeholder: "e.g. Make coffee" },
   { id: 1, placeholder: "e.g. Drink coffee & smile" },
@@ -22,10 +22,43 @@ const initialSubtasks = [
 let nextSubtasksId = initialSubtasks.length;
 
 export function EditTask() {
+  // get board columns
+  const columns = useOutletContext();
+
+  // status dropdown options
+  let columnId = 0;
+  const dropdownOptions = [];
+
+  // set board columns as status dropdown option
+  for (const column of columns) {
+    dropdownOptions.push({ id: columnId++, value: column.name });
+  }
+
+  // get data from previous route
+  const { state } = useLocation();
+
+  let subtaskId = 0;
+  // where we will store the values of task's current subtasks
+  const currentSubtasks = [];
+
+  // create an object that will store the default values of
+  // react-hook-form's input
+  let defaultValIndex = 0;
+  const subtaskDefaultValues = {};
+
+  for (const subtask of state.subtasks) {
+    currentSubtasks.push({ id: subtaskId++, title: subtask.title });
+    subtaskDefaultValues[`subtask-${defaultValIndex++}`] = subtask.title;
+  }
+
   // react-hook-form
   const methods = useForm({
     defaultValues: {
-      status: initialDropdownOptions[0].value,
+      title: state.title,
+      description: state.description,
+      status: state.status,
+      // destructure subtaskDefaultValues
+      ...subtaskDefaultValues,
     },
   });
 
@@ -34,11 +67,9 @@ export function EditTask() {
   const submit = useSubmit(); // to submit form by using react router
 
   // set dropdown option (ui only)
-  const [selectedOption, setSelectedOption] = useState(
-    initialDropdownOptions[0]
-  );
+  const [selectedOption, setSelectedOption] = useState(state.status);
 
-  const [subtasks, setSubtasks] = useState(initialSubtasks);
+  const [subtasks, setSubtasks] = useState(currentSubtasks);
 
   // handler for adding a new subtask
   const handleAddSubtask = () => {
@@ -65,7 +96,6 @@ export function EditTask() {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
     // programmatically submit a form for react-router
     // to be in-sync with react-hook-form
     submit(data, {
@@ -82,7 +112,7 @@ export function EditTask() {
             className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md"
             onSubmit={methods.handleSubmit(onSubmit)}
           >
-            <h2 className="text-lg">Add New Task</h2>
+            <h2 className="text-lg">Edit Task</h2>
 
             <Input
               label="Title"
@@ -105,6 +135,8 @@ export function EditTask() {
                   label={`subtask-${index}`}
                   label-sr-only="true"
                   placeholder={subtask?.placeholder}
+                  // match the name of keys in the defaultValues
+                  // to display the current task's subtasks on ui
                   name={`subtask-${index}`}
                   onRemove={() => handleRemoveSubtask(subtask.id)}
                 />
@@ -120,7 +152,7 @@ export function EditTask() {
 
             <Dropdown
               name="status"
-              options={initialDropdownOptions}
+              options={dropdownOptions}
               selectedOption={selectedOption}
               onOptionChange={handleDropdownOptionChange}
             />
