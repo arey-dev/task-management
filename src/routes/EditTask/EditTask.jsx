@@ -157,7 +157,7 @@ export function EditTask() {
               onOptionChange={handleDropdownOptionChange}
             />
 
-            <Button type="submit">Create Task</Button>
+            <Button type="submit">Save Changes</Button>
           </Form>
         </FormProvider>
       </Modal>
