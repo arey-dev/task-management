@@ -4,8 +4,14 @@ import ellipsis from "../../assets/icon-vertical-ellipsis.svg";
 import { Link, useParams } from "react-router-dom";
 import { twJoin } from "tailwind-merge";
 
-export function DropdownMenu({ match, className, component = "Board" }) {
+export function DropdownMenu({
+  match,
+  className,
+  component = "Board",
+  LinkState,
+}) {
   const [isOpen, setIsOpen] = useState(false);
+
   const params = useParams();
 
   return (
@@ -33,6 +39,7 @@ export function DropdownMenu({ match, className, component = "Board" }) {
             }
             className="block text-body-lg text-on-background mb-4 cursor-pointer"
             onClick={() => setIsOpen(false)}
+            state={LinkState}
           >
             Edit {component}
           </Link>
