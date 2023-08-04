@@ -19,7 +19,7 @@ export function Board() {
             />
           ))}
           <AddColumnButton />
-          <Outlet />
+          <Outlet context={columns} />
         </Flex>
       ) : (
         <CallToAction />
