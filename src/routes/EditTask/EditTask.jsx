@@ -38,7 +38,11 @@ export function EditTask() {
   // create an object that will store the default values of
   // react-hook-form's input
   let defaultValIndex = 0;
-  const subtaskDefaultValues = {};
+  const subtaskDefaultValues = {
+    title: state.title,
+    description: state.description,
+    status: state.status,
+  };
 
   for (const subtask of state.subtasks) {
     initialSubtasks.push({ id: initialSubtaskId++, title: subtask.title });
@@ -48,9 +52,6 @@ export function EditTask() {
   // react-hook-form
   const methods = useForm({
     defaultValues: {
-      title: state.title,
-      description: state.description,
-      status: state.status,
       // destructure subtaskDefaultValues
       ...subtaskDefaultValues,
     },
@@ -66,8 +67,6 @@ export function EditTask() {
   const [subtaskId, setSubtaskId] = useState(initialSubtaskId);
 
   const [subtasks, setSubtasks] = useState(initialSubtasks);
-
-  console.log(subtaskId);
 
   // handler for adding a new subtask
   const handleAddSubtask = () => {
