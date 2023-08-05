@@ -3,7 +3,7 @@ import { Welcome } from "./routes";
 import { Root, loader as RootLoader } from "./routes/Root";
 import { Board, loader as BoardLoader } from "./routes/Board";
 import { AddBoard, action as AddBoardAction } from "./routes/AddBoard";
-import { EditBoard } from "./routes/EditBoard";
+import { EditBoard, action as EditBoardAction } from "./routes/EditBoard";
 import { AddTask, action as AddTaskAction } from "./routes/AddTask";
 import { EditTask, action as EditTaskAction } from "./routes/EditTask";
 import {
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
           {
             path: "edit-board",
             element: <EditBoard />,
-            action: EditTaskAction,
+            action: EditBoardAction,
           },
           {
             path: "add-task",
@@ -44,6 +44,7 @@ const router = createBrowserRouter([
           {
             path: "task/:taskId/edit-task",
             element: <EditTask />,
+            action: EditTaskAction,
           },
         ],
       },
