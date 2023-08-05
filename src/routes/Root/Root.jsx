@@ -5,11 +5,9 @@ import { BoardNav } from "../../components";
 import { ShowSidebarBtn } from "../../components";
 import { useState } from "react";
 import { Outlet, useLoaderData } from "react-router-dom";
-import data from "../../data.json";
 
 export function Root() {
   const { boardList } = useLoaderData();
-  const { boards } = data;
 
   const [showSidebar, setShowSidebar] = useState(true);
 
@@ -27,7 +25,7 @@ export function Root() {
         ) : (
           <ShowSidebarBtn onHandleClick={handleSidebarToggle} />
         )}
-        <Outlet context={boards} />
+        <Outlet />
       </Flex>
     </>
   );
