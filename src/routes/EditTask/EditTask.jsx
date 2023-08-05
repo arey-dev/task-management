@@ -14,13 +14,6 @@ import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useSubmit } from "react-router-dom";
 
-const initialSubtasks = [
-  { id: 0, placeholder: "e.g. Make coffee" },
-  { id: 1, placeholder: "e.g. Drink coffee & smile" },
-];
-
-let nextSubtasksId = initialSubtasks.length;
-
 export function EditTask() {
   // get board columns
   const columns = useOutletContext();
@@ -37,9 +30,10 @@ export function EditTask() {
   // get data from previous route
   const { state } = useLocation();
 
-  let subtaskId = 0;
-  // where we will store the values of task's current subtasks
-  const currentSubtasks = [];
+  // where we will store the initialSubtasks that came from
+  // the state of this route
+  let initialSubtaskId = 0;
+  const initialSubtasks = [];
 
   // create an object that will store the default values of
   // react-hook-form's input
@@ -47,7 +41,7 @@ export function EditTask() {
   const subtaskDefaultValues = {};
 
   for (const subtask of state.subtasks) {
-    currentSubtasks.push({ id: subtaskId++, title: subtask.title });
+    initialSubtasks.push({ id: initialSubtaskId++, title: subtask.title });
     subtaskDefaultValues[`subtask-${defaultValIndex++}`] = subtask.title;
   }
 
@@ -69,17 +63,23 @@ export function EditTask() {
   // set dropdown option (ui only)
   const [selectedOption, setSelectedOption] = useState(state.status);
 
-  const [subtasks, setSubtasks] = useState(currentSubtasks);
+  const [subtaskId, setSubtaskId] = useState(initialSubtaskId);
+
+  const [subtasks, setSubtasks] = useState(initialSubtasks);
+
+  console.log(subtaskId);
 
   // handler for adding a new subtask
   const handleAddSubtask = () => {
     const nextSubtask = [
       ...subtasks,
       {
-        id: nextSubtasksId++,
+        id: subtaskId,
         placeholder: "create new subtask",
       },
     ];
+
+    setSubtaskId((id) => id + 1);
 
     setSubtasks(nextSubtask);
   };
