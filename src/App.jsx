@@ -4,6 +4,7 @@ import { Root, loader as RootLoader } from "./routes/Root";
 import { Board, loader as BoardLoader } from "./routes/Board";
 import { AddBoard, action as AddBoardAction } from "./routes/AddBoard";
 import { EditBoard, action as EditBoardAction } from "./routes/EditBoard";
+import { DeleteBoard, action as DeleteBoardAction } from "./routes/DeleteBoard";
 import { AddTask, action as AddTaskAction } from "./routes/AddTask";
 import { EditTask, action as EditTaskAction } from "./routes/EditTask";
 import {
@@ -29,6 +30,11 @@ const router = createBrowserRouter([
             path: "edit-board",
             element: <EditBoard />,
             action: EditBoardAction,
+          },
+          {
+            path: "delete-board",
+            element: <DeleteBoard />,
+            action: DeleteBoardAction,
           },
           {
             path: "add-task",
