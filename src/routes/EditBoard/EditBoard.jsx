@@ -1,4 +1,4 @@
-import { Form, useSubmit } from "react-router-dom";
+import { Form, useOutletContext, useSubmit, useParams } from "react-router-dom";
 import { Modal } from "../../components";
 import { Input } from "../../components/form";
 import { RemovableInput } from "../../components/form";
@@ -6,28 +6,45 @@ import { Button } from "../../components/ui";
 import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 
-const initialColumns = [
-  { id: 0, value: "Todo", placeholder: "create new column" },
-  { id: 1, value: "Doing", placeholder: "create new column" },
-];
-
-let nextColumnId = initialColumns.length;
-
 export function EditBoard() {
-  const methods = useForm(); // react-hook-form
+  // get board columns
+  const OutletContextData = useOutletContext();
+
+  const params = useParams(); // to read boardId params
+
+  const submit = useSubmit(); // to submit form by using react router
+
+  // ids for initial values
+  let initialColumnId = 0;
+  let defaultValIndex = 0;
+  // where to store initial columns state values
+  const initialColumns = [];
+
+  // where to store default values of react-hook-form
+  const columnDefaultValues = { name: params.boardId };
+
+  for (const column of OutletContextData) {
+    initialColumns.push({ id: initialColumnId++, value: column.name });
+    columnDefaultValues[`column-${defaultValIndex++}`] = column.name;
+  }
 
   // multiple column state for board
   const [columns, setColumns] = useState(initialColumns);
 
-  const submit = useSubmit();
+  const [columnId, setColumnId] = useState(initialColumnId);
+
+  // react-hook-form
+  // destructure columnDefaultValues
+  const methods = useForm({ defaultValues: { ...columnDefaultValues } });
 
   // handler for adding a column for a board
   const handleAddColumn = () => {
     const nextColumn = [
       ...columns,
-      { id: nextColumnId++, value: "", placeholder: "create new column" },
+      { id: columnId, placeholder: "create new column" },
     ];
 
+    setColumnId((id) => id + 1);
     setColumns(nextColumn);
   };
 
@@ -39,7 +56,10 @@ export function EditBoard() {
   const onSubmit = (data) => {
     // programmatically submit a form for react-router
     // to be in-sync with react-hook-form
-    submit(data, { method: "post", action: "/board/add-board" });
+    submit(data, {
+      method: "post",
+      action: `/board/${params.boardId}/edit-board`,
+    });
   };
 
   return (
@@ -49,7 +69,7 @@ export function EditBoard() {
           className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          <h2 className="text-lg">Add New Board</h2>
+          <h2 className="text-lg">Edit Board</h2>
 
           <Input label="Name" name="name" placeholder="e.g Web Design" />
 
@@ -60,7 +80,6 @@ export function EditBoard() {
                 key={column.id}
                 label={`column ${index}`}
                 label-sr-only="true"
-                defaultValue={column.value}
                 placeholder={column.placeholder}
                 name={`column-${index}`}
                 onRemove={() => handleRemoveColumn(column.id)}
@@ -76,7 +95,7 @@ export function EditBoard() {
             </Button>
           </section>
 
-          <Button type="submit">Create New Board</Button>
+          <Button type="submit">Save Changes</Button>
         </Form>
       </FormProvider>
     </Modal>
