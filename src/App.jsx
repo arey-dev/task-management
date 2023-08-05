@@ -26,6 +26,11 @@ const router = createBrowserRouter([
         loader: BoardLoader,
         children: [
           {
+            path: "edit-board",
+            element: <EditBoard />,
+            action: EditTaskAction,
+          },
+          {
             path: "add-task",
             element: <AddTask />,
             action: AddTaskAction,
@@ -46,11 +51,6 @@ const router = createBrowserRouter([
         path: "/board/add-board",
         element: <AddBoard />,
         action: AddBoardAction,
-      },
-      {
-        path: "board/:boardId/edit-board",
-        element: <EditBoard />,
-        action: EditTaskAction,
       },
     ],
   },
