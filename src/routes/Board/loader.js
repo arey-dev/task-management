@@ -1,40 +1,30 @@
-import {
-  getDoc,
-  doc,
-  query,
-  collection,
-  where,
-  getDocs,
-} from "firebase/firestore";
+import { query, collection, where, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 import { removeDelimiter } from "../../utilities";
 
 export async function loader({ params }) {
   // the board we want to find
-  const boardId = removeDelimiter(params.boardId);
+  const boardName = removeDelimiter(params.boardId, "-");
 
-  // reference to boards collection
-  const boardRef = doc(db, "boards", boardId);
+  // query for board
+  const q = query(collection(db, "boards"), where("name", "==", boardName));
 
-  // query for boardId
-  const boardSnap = await getDoc(boardRef);
+  // get board from db
+  const boardSnap = await getDocs(q);
 
-  // return null if data doesn't exists
-  if (!boardSnap.exists()) {
+  if (boardSnap.empty) {
     return null;
   }
 
-  const board = boardSnap.data();
+  let boardId;
+  let boardData;
+  boardSnap.forEach((doc) => {
+    boardId = doc.id;
+    boardData = doc.data();
+  });
 
-  // get board columns
-  const columns = [];
-  for (const field in board) {
-    if (field !== "name") {
-      columns.push({ name: board[field] });
-    }
-  }
-
-  // get board tasks
+  // get board tasks and columns
+  const columns = boardData.columns;
   const tasks = {};
   for (const column of columns) {
     // create a array property in the object
