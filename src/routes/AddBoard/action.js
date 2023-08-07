@@ -1,7 +1,23 @@
-import { setDoc, doc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
 import { redirect } from "react-router-dom";
-import { hypenateString } from "../../utilities";
+
+function transformFormData(obj) {
+  // transform object
+  const columns = [];
+  for (const key in obj) {
+    if (key.includes("column")) {
+      columns.push({ name: obj[key] });
+    }
+  }
+
+  const data = {
+    name: obj.name,
+    columns: columns,
+  };
+
+  return data;
+}
 
 export async function action({ request }) {
   // Get data from AddBoard Form
@@ -10,11 +26,10 @@ export async function action({ request }) {
   // create object from FormData
   const board = Object.fromEntries(formData);
 
-  // id for firestore document
-  const id = hypenateString(board.name);
+  const docData = transformFormData(board);
 
   // add doc to firestore
-  await setDoc(doc(db, "boards", id), board);
+  await addDoc(collection(db, "boards"), docData);
 
   return redirect("/");
 }
