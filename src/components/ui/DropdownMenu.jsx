@@ -46,7 +46,7 @@ export function DropdownMenu({
           <Link
             to={
               params.taskId
-                ? `/board/${params.boardId}/task/${params.taskId}/delete-board`
+                ? `/board/${params.boardId}/task/${params.taskId}/delete-task`
                 : `/board/${params.boardId}/delete-board`
             }
             className="block text-body-lg text-danger cursor-pointer"
