@@ -7,6 +7,7 @@ import { EditBoard, action as EditBoardAction } from "./routes/EditBoard";
 import { DeleteBoard, action as DeleteBoardAction } from "./routes/DeleteBoard";
 import { AddTask, action as AddTaskAction } from "./routes/AddTask";
 import { EditTask, action as EditTaskAction } from "./routes/EditTask";
+import { DeleteTask, action as DeleteTaskAction } from "./routes/DeleteTask";
 import {
   TaskView,
   loader as TaskViewLoader,
@@ -51,6 +52,11 @@ const router = createBrowserRouter([
             path: "task/:taskId/edit-task",
             element: <EditTask />,
             action: EditTaskAction,
+          },
+          {
+            path: "task/:taskId/delete-task",
+            element: <DeleteTask />,
+            action: DeleteTaskAction,
           },
         ],
       },
