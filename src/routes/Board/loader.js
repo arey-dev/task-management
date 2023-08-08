@@ -42,7 +42,6 @@ export async function loader({ params }) {
     if (querySnapshot.empty) {
       break;
     }
-    // exit loop is querySnapshot is empty
 
     // add each task on the array
     querySnapshot.forEach((doc) => {
