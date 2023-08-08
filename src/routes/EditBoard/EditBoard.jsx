@@ -5,6 +5,7 @@ import { RemovableInput } from "../../components/form";
 import { Button } from "../../components/ui";
 import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
+import { removeDelimiter } from "../../utilities";
 
 export function EditBoard() {
   // get board columns
@@ -21,7 +22,7 @@ export function EditBoard() {
   const initialColumns = [];
 
   // where to store default values of react-hook-form
-  const columnDefaultValues = { name: params.boardId };
+  const columnDefaultValues = { name: removeDelimiter(params.boardId, "-") };
 
   for (const column of OutletContextData) {
     initialColumns.push({ id: initialColumnId++, value: column.name });
