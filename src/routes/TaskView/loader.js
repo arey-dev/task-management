@@ -1,19 +1,32 @@
-import { doc, getDoc } from "firebase/firestore";
+import { getDocs, query, where, collection } from "firebase/firestore";
 import { db } from "../../firebase";
+import { removeDelimiter } from "../../utilities";
 
 export async function loader({ params }) {
-  // the task we to get
-  const taskId = params.taskId;
+  // the task we to find
+  const taskName = removeDelimiter(params.taskId, "-");
 
-  const boardId = params.boardId;
+  // the board we want to find
+  const boardName = removeDelimiter(params.boardId, "-");
 
-  // reference to the task
-  const taskRef = doc(db, `boards/${boardId}/tasks`, taskId);
+  // query for boardId
+  let boardId;
+  const qBoard = query(
+    collection(db, "boards"),
+    where("name", "==", boardName)
+  );
+  const boardSnap = await getDocs(qBoard);
+  boardSnap.forEach((doc) => (boardId = doc.id));
 
-  // query for Task
-  const taskSnap = await getDoc(taskRef);
-
-  const task = taskSnap.data();
+  // query for task
+  let task;
+  const taskSnap = await getDocs(
+    query(
+      collection(db, "boards", boardId, "tasks"),
+      where("title", "==", taskName)
+    )
+  );
+  taskSnap.forEach((doc) => (task = doc.data()));
 
   return { task };
 }
