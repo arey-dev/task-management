@@ -13,7 +13,7 @@ export async function loader({ params }) {
   const boardSnap = await getDocs(q);
 
   if (boardSnap.empty) {
-    return null;
+    console.log("board empty");
   }
 
   let boardId;
@@ -38,6 +38,11 @@ export async function loader({ params }) {
         where("status", "==", column.name)
       )
     );
+
+    if (querySnapshot.empty) {
+      break;
+    }
+    // exit loop is querySnapshot is empty
 
     // add each task on the array
     querySnapshot.forEach((doc) => {
