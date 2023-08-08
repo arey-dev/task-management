@@ -99,7 +99,7 @@ export function EditTask() {
     // to be in-sync with react-hook-form
     submit(data, {
       method: "post",
-      action: `/board/${params.boardId}/add-task`,
+      action: `/board/${params.boardId}/edit-task`,
     });
   };
 
