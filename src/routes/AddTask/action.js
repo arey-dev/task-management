@@ -1,6 +1,6 @@
-import { setDoc, doc } from "firebase/firestore";
+import { addDoc, query, collection, where, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
-import { hypenateString } from "../../utilities";
+import { removeDelimiter } from "../../utilities";
 import { redirect } from "react-router-dom";
 
 function transformFormData(obj) {
@@ -23,19 +23,33 @@ function transformFormData(obj) {
 }
 
 export async function action({ params, request }) {
-  const boardId = params.boardId;
+  // the board we want to find
+  const boardName = removeDelimiter(params.boardId, "-");
 
   // Get data from AddTask Form
   const formData = await request.formData();
 
+  // query for board
+  const q = query(collection(db, "boards"), where("name", "==", boardName));
+
+  // get board from db
+  const boardSnap = await getDocs(q);
+
+  if (boardSnap.empty) {
+    console.log("board empty");
+  }
+
+  let boardId;
+  boardSnap.forEach((doc) => {
+    boardId = doc.id;
+  });
+
   // create object from FormData
   const task = Object.fromEntries(formData);
 
-  const docId = hypenateString(task.title);
-
   const docData = transformFormData(task);
 
-  await setDoc(doc(db, `boards/${boardId}/tasks`, docId), docData);
+  await addDoc(collection(db, `boards/${boardId}/tasks`), docData);
 
-  return redirect(`/board/${boardId}`);
+  return redirect(`/board/${params.boardId}`);
 }
