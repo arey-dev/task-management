@@ -44,7 +44,7 @@ function transformFormData(obj, prevState) {
     status: obj.status,
   };
 
-  return data; // Return the transformed data
+  return data;
 }
 
 export function EditTask() {
@@ -130,11 +130,12 @@ export function EditTask() {
   const onSubmit = (data) => {
     const updatedData = transformFormData(data, state);
 
-    // programmatically submit a form for react-router
-    // to be in-sync with react-hook-form
-    submit(updatedData, {
+    // submit data as json to preserve
+    // the shape of the data
+    submit(JSON.stringify(updatedData), {
       method: "post",
       action: `/board/${params.boardId}/task/${params.taskId}/edit-task`,
+      encType: "application/json",
     });
   };
 
