@@ -14,6 +14,39 @@ import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useSubmit } from "react-router-dom";
 
+// transform the data before passing to route action
+// to avoid overwriting the completed subtasks
+function transformFormData(obj, prevState) {
+  // Create a Set of titles of completed subtasks from the prevState
+  // use a Set to store the completed subtask titles, which provides faster lookup
+  const completedSubtaskTitles = new Set(
+    prevState.subtasks
+      .filter((subtask) => subtask.isCompleted)
+      .map((subtask) => subtask.title)
+  );
+
+  // Initialize an array to store transformed subtasks
+  const subtasks = Object.entries(obj)
+    // Filter only properties that start with "subtask"
+    .filter(([key]) => key.startsWith("subtask"))
+    // Map the filtered properties to an array of subtask objects
+    // eslint-disable-next-line no-unused-vars
+    .map(([key, value]) => ({
+      title: value,
+      isCompleted: completedSubtaskTitles.has(value), // Check if the subtask title is completed
+    }));
+
+  // Create the final data object with transformed subtasks
+  const data = {
+    title: obj.title,
+    description: obj.description,
+    subtasks,
+    status: obj.status,
+  };
+
+  return data; // Return the transformed data
+}
+
 export function EditTask() {
   // get board columns
   const columns = useOutletContext();
@@ -95,11 +128,13 @@ export function EditTask() {
   };
 
   const onSubmit = (data) => {
+    const updatedData = transformFormData(data, state);
+
     // programmatically submit a form for react-router
     // to be in-sync with react-hook-form
-    submit(data, {
+    submit(updatedData, {
       method: "post",
-      action: `/board/${params.boardId}/edit-task`,
+      action: `/board/${params.boardId}/task/${params.taskId}/edit-task`,
     });
   };
 
