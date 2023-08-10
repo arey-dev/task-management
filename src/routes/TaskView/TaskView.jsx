@@ -1,21 +1,34 @@
 /* eslint-disable react/prop-types */
-import { Form, useLoaderData } from "react-router-dom";
+import {
+  useFetcher,
+  useLoaderData,
+  useOutletContext,
+  useParams,
+} from "react-router-dom";
 import { Modal } from "../../components";
 import { DropdownMenu } from "../../components/ui";
 import { Checkbox, Dropdown } from "../../components/form";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-const initialDropdownOptions = [
-  { id: 0, value: "Todo" },
-  { id: 1, value: "Doing" },
-  { id: 2, value: "Done" },
-];
-
 export function TaskView() {
   const {
     task: { title, description, status, subtasks },
   } = useLoaderData();
+
+  const fetcher = useFetcher();
+
+  // get board columns
+  const columns = useOutletContext();
+
+  // status dropdown options
+  let columnId = 0;
+  const dropdownOptions = [];
+
+  // set board columns as status dropdown option
+  for (const column of columns) {
+    dropdownOptions.push({ id: columnId++, value: column.name });
+  }
 
   const methods = useForm({
     defaultValues: {
@@ -23,7 +36,16 @@ export function TaskView() {
     },
   });
 
+  const params = useParams();
+
   const [selectedOption, setSelectedOption] = useState(status);
+
+  const onSubmit = (data) => {
+    fetcher.submit(data, {
+      method: "post",
+      action: `/board/${params.boardId}/task/${params.taskId}`,
+    });
+  };
 
   const handleDropdownOptionChange = (option) => {
     setSelectedOption(option); // for ui
@@ -33,7 +55,7 @@ export function TaskView() {
   return (
     <Modal>
       <FormProvider {...methods}>
-        <Form
+        <fetcher.Form
           className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md"
           onClick={(e) => e.stopPropagation()}
         >
@@ -63,8 +85,7 @@ export function TaskView() {
                 <li key={index}>
                   <Checkbox
                     label={subtask.title}
-                    name="subtask"
-                    value={subtask.title}
+                    name={subtask.title}
                     checked={subtask.isCompleted}
                   />
                 </li>
@@ -73,11 +94,12 @@ export function TaskView() {
           </section>
           <Dropdown
             name="status"
-            options={initialDropdownOptions}
+            options={dropdownOptions}
             selectedOption={selectedOption}
             onOptionChange={handleDropdownOptionChange}
+            submit={methods.handleSubmit(onSubmit)}
           />
-        </Form>
+        </fetcher.Form>
       </FormProvider>
     </Modal>
   );
