@@ -33,7 +33,10 @@ export function TaskView() {
   return (
     <Modal>
       <FormProvider {...methods}>
-        <Form className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md">
+        <Form
+          className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md"
+          onClick={(e) => e.stopPropagation()}
+        >
           <header className="flex justify-between items-center">
             <h2 className="text-heading-lg">{title}</h2>
             <DropdownMenu

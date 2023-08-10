@@ -81,6 +81,7 @@ export function AddTask() {
           <Form
             className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md"
             onSubmit={methods.handleSubmit(onSubmit)}
+            onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-lg">Add New Task</h2>
 

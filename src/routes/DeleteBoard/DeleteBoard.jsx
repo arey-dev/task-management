@@ -11,6 +11,7 @@ export function DeleteBoard() {
       <Form
         method="post"
         className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md"
+        onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-heading-lg text-danger">Delete this board?</h2>
         <p className="text-body-lg text-on-background">
