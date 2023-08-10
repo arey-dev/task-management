@@ -6,7 +6,7 @@ import { TasksContainer } from "./TasksContainer";
 export function Column({ columnName, tasks }) {
   return (
     <section className="w-[17.5rem] shrink-0">
-      <ColumnHeader name={columnName} taskCount={tasks ? tasks.length : 2} />
+      <ColumnHeader name={columnName} taskCount={tasks ? tasks.length : 0} />
       {tasks && (
         <TasksContainer>
           {tasks.map((task) => (
