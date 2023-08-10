@@ -58,6 +58,11 @@ const router = createBrowserRouter([
             element: <DeleteTask />,
             action: DeleteTaskAction,
           },
+          {
+            path: "add-board",
+            element: <AddBoard />,
+            action: AddBoardAction,
+          },
         ],
       },
       {
