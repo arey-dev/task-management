@@ -3,7 +3,15 @@ import { useId, useState } from "react";
 import { twJoin } from "tailwind-merge";
 import { useFormContext } from "react-hook-form";
 
-export function Checkbox({ checked, name, label, className, ...props }) {
+export function Checkbox({
+  checked,
+  name,
+  label,
+  className,
+  submit,
+  onToggle,
+  ...props
+}) {
   const id = useId();
   const { register } = useFormContext();
   const [check, setCheck] = useState(checked);
@@ -16,10 +24,13 @@ export function Checkbox({ checked, name, label, className, ...props }) {
       )}
     >
       <input
-        onClick={() => setCheck(!check)}
-        defaultChecked={checked}
         id={id}
         type="checkbox"
+        onClick={() => {
+          setCheck(!check);
+          onToggle(name, check)
+          submit();
+        }}
         className="w-4 h-4 text-primary bg-light-surface rounded-sm focus:ring-primary focus:outline-none focus:ring-1"
         {...register(name)}
         {...props}

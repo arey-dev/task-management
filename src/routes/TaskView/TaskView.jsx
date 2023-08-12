@@ -18,6 +18,20 @@ export function TaskView() {
 
   const fetcher = useFetcher();
 
+  const checkboxDefaultValues = {};
+  subtasks.forEach((subtask) => {
+    checkboxDefaultValues[subtask.title] = subtask.isCompleted;
+  });
+
+  const methods = useForm({
+    defaultValues: {
+      status: status,
+      ...checkboxDefaultValues,
+    },
+  });
+
+  const params = useParams();
+
   // get board columns
   const columns = useOutletContext();
 
@@ -29,14 +43,6 @@ export function TaskView() {
   for (const column of columns) {
     dropdownOptions.push({ id: columnId++, value: column.name });
   }
-
-  const methods = useForm({
-    defaultValues: {
-      status: status,
-    },
-  });
-
-  const params = useParams();
 
   const [selectedOption, setSelectedOption] = useState(status);
 
@@ -50,6 +56,10 @@ export function TaskView() {
   const handleDropdownOptionChange = (option) => {
     setSelectedOption(option); // for ui
     methods.setValue("status", option.value); // for set value of react-hook-form input
+  };
+
+  const handleCheck = (name, value) => {
+    methods.setValue(name, value);
   };
 
   return (
@@ -87,6 +97,8 @@ export function TaskView() {
                     label={subtask.title}
                     name={subtask.title}
                     checked={subtask.isCompleted}
+                    onToggle={handleCheck}
+                    submit={methods.handleSubmit(onSubmit)}
                   />
                 </li>
               ))}

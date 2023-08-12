@@ -32,7 +32,7 @@ export function Dropdown({
       {isOpen && (
         <ul className="absolute left-0 top-full mt-3 dropdown-shadow flex flex-col gap-2 w-full bg-light-surface text-on-background text-body-lg p-4 rounded-md">
           {options.map((option) => (
-            <button
+            <li
               className="hover:text-primary hover:cursor-pointer"
               key={`${option.id}${option.value}`}
               onClick={() => {
@@ -42,7 +42,7 @@ export function Dropdown({
               }}
             >
               {option.value}
-            </button>
+            </li>
           ))}
         </ul>
       )}
