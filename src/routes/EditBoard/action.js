@@ -10,47 +10,46 @@ import { db } from "../../firebase";
 import { redirect } from "react-router-dom";
 import { hypenateString, removeDelimiter } from "../../utilities";
 
-function transformFormData(obj) {
-  // transform object
-  const columns = [];
-  for (const key in obj) {
-    if (key.includes("column")) {
-      columns.push({ name: obj[key] });
-    }
-  }
-
-  const data = {
-    name: obj.name,
-    columns: columns,
-  };
-
-  return data;
-}
-
 export async function action({ request, params }) {
+  // Extract board name from params and prepare for Firestore query
   const boardName = removeDelimiter(params.boardId, "-");
 
-  // Get data from AddBoard Form
-  const formData = await request.formData();
+  // Get updated board data from request JSON
+  const updatedBoardData = await request.json();
 
-  // create object from FormData
-  const board = Object.fromEntries(formData);
+  // Find the ID of the board to be updated
+  const boardId = await findBoardId(boardName);
 
-  // get id of the board that will be updated
-  let boardId;
+  // If board doesn't exist, return
+  if (!boardId) {
+    console.log("Board not found");
+    return;
+  }
+
+  // Update the board in Firestore
+  await updateBoard(boardId, updatedBoardData);
+
+  // Redirect to the updated board's path
+  return redirect(`/board/${hypenateString(updatedBoardData.name)}`);
+}
+
+// Function to find the ID of the board
+async function findBoardId(boardName) {
   const qBoard = query(
     collection(db, "boards"),
     where("name", "==", boardName)
   );
   const boardSnap = await getDocs(qBoard);
-  boardSnap.forEach((doc) => (boardId = doc.id));
 
-  const updatedBoard = transformFormData(board);
+  if (boardSnap.empty) {
+    return null; // Return null if board doesn't exist
+  }
 
-  // update board on firestore
-  await updateDoc(doc(db, "boards", boardId), updatedBoard);
+  // Extract and return the board ID
+  return boardSnap.docs[0].id;
+}
 
-  // use board.name instead of params.boardId to redirect
-  // updated board path, if board name is changed
-  return redirect(`/board/${hypenateString(board.name)}`);
+// Function to update the board in Firestore
+async function updateBoard(boardId, updatedBoardData) {
+  await updateDoc(doc(db, "boards", boardId), updatedBoardData);
 }
