@@ -4,10 +4,10 @@ import { redirect } from "react-router-dom";
 
 export async function action({ request }) {
   // Get data from AddBoard Form
-  const formData = await request.json();
+  const board = await request.json();
 
   // add doc to firestore
-  await addDoc(collection(db, "boards"), formData);
+  await addDoc(collection(db, "boards"), board);
 
   return redirect("/");
 }
