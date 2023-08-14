@@ -30,8 +30,6 @@ export function TaskView() {
     },
   });
 
-  const subtaskArray = Object.entries(subtasks);
-
   const params = useParams();
 
   // get board columns
@@ -47,6 +45,9 @@ export function TaskView() {
   }
 
   const [selectedOption, setSelectedOption] = useState(status);
+
+  // transform subtasks into array to process it much easier
+  const subtaskArray = Object.entries(subtasks);
 
   const onSubmit = (data) => {
     fetcher.submit(data, {
