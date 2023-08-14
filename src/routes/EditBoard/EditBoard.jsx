@@ -18,6 +18,7 @@ export function EditBoard() {
   // ids for initial values
   let initialColumnId = 0;
   let defaultValIndex = 0;
+
   // where to store initial columns state values
   const initialColumns = [];
 
@@ -55,11 +56,14 @@ export function EditBoard() {
   };
 
   const onSubmit = (data) => {
+    const transformedData = transformFormData(data);
+
     // programmatically submit a form for react-router
     // to be in-sync with react-hook-form
-    submit(data, {
+    submit(JSON.stringify(transformedData), {
       method: "post",
       action: `/board/${params.boardId}/edit-board`,
+      encType: "application/json",
     });
   };
 
@@ -102,4 +106,15 @@ export function EditBoard() {
       </FormProvider>
     </Modal>
   );
+}
+
+function transformFormData(obj) {
+  const columns = Object.keys(obj)
+    .filter((key) => key.includes("column"))
+    .map((key) => ({ name: obj[key] }));
+
+  return {
+    name: obj.name,
+    columns: columns,
+  };
 }
