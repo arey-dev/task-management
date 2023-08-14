@@ -16,10 +16,10 @@ let nextColumnId = initialColumns.length;
 export function AddBoard() {
   const methods = useForm(); // react-hook-form
 
+  const submit = useSubmit();
+
   // multiple column state for board
   const [columns, setColumns] = useState(initialColumns);
-
-  const submit = useSubmit();
 
   // handler for adding a column for a board
   const handleAddColumn = () => {
@@ -37,9 +37,15 @@ export function AddBoard() {
   };
 
   const onSubmit = (data) => {
+    const transformedData = transformFormData(data);
+
     // programmatically submit a form for react-router
     // to be in-sync with react-hook-form
-    submit(data, { method: "post", action: "/board/add-board" });
+    submit(JSON.stringify(transformedData), {
+      method: "post",
+      action: "/board/add-board",
+      encType: "application/json",
+    });
   };
 
   return (
@@ -82,4 +88,15 @@ export function AddBoard() {
       </FormProvider>
     </Modal>
   );
+}
+
+function transformFormData(obj) {
+  const columns = Object.keys(obj)
+    .filter((key) => key.includes("column"))
+    .map((key) => ({ name: obj[key] }));
+
+  return {
+    name: obj.name,
+    columns: columns,
+  };
 }
