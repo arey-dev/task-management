@@ -5,10 +5,10 @@ import { redirect } from "react-router-dom";
 
 function transformFormData(obj) {
   // transform object
-  const subtasks = [];
+  const subtasks = {};
   for (const key in obj) {
     if (key.includes("subtask")) {
-      subtasks.push({ title: obj[key], isCompleted: false });
+      subtasks[obj[key]] = false;
     }
   }
 

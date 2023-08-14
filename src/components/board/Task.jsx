@@ -5,11 +5,11 @@ import { hypenateString } from "../../utilities";
 export function Task({ task }) {
   const { title, subtasks } = task;
 
-  const subtaskCompleted = subtasks.filter(
-    (subtask) => subtask.isCompleted
+  const subtaskCompleted = Object.values(subtasks).filter(
+    (subtask) => subtask
   ).length;
 
-  const subtaskCount = subtasks.length;
+  const subtaskCount = Object.keys(subtasks).length;
 
   const navigate = useNavigate();
 
