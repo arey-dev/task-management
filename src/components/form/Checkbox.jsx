@@ -28,7 +28,7 @@ export function Checkbox({
         type="checkbox"
         onClick={() => {
           setCheck(!check);
-          onToggle(name, check)
+          onToggle(name, !check);
           submit();
         }}
         className="w-4 h-4 text-primary bg-light-surface rounded-sm focus:ring-primary focus:outline-none focus:ring-1"
