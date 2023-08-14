@@ -6,7 +6,7 @@ export function Task({ task }) {
   const { title, subtasks } = task;
 
   const subtaskCompleted = Object.values(subtasks).filter(
-    (subtask) => subtask
+    (subtask) => subtask === "true"
   ).length;
 
   const subtaskCount = Object.keys(subtasks).length;

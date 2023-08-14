@@ -4,18 +4,18 @@ import { removeDelimiter } from "../../utilities";
 import { redirect } from "react-router-dom";
 
 function transformFormData(obj) {
-  // transform object
-  const subtasks = {};
-  for (const key in obj) {
-    if (key.includes("subtask")) {
-      subtasks[obj[key]] = false;
-    }
-  }
+  // Transform subtasks directly using reduce
+  const subtasks = Object.entries(obj)
+    .filter(([key]) => key.startsWith("subtask"))
+    .reduce((acc, [, value]) => {
+      acc[value] = false;
+      return acc;
+    }, {});
 
   const data = {
     title: obj.title,
     description: obj.description,
-    subtasks: subtasks,
+    subtasks,
     status: obj.status,
   };
 

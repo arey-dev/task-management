@@ -14,7 +14,7 @@ export function Checkbox({
 }) {
   const id = useId();
   const { register } = useFormContext();
-  const [check, setCheck] = useState(checked);
+  const [check, setCheck] = useState(!!checked);
 
   return (
     <div

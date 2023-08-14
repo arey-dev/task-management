@@ -18,15 +18,15 @@ export function TaskView() {
 
   const fetcher = useFetcher();
 
-  // const checkboxDefaultValues = {};
-  // Object.entries(subtasks).forEach((subtask) => {
-  //   checkboxDefaultValues[subtask[0]] = subtask[1];
-  // });
+  const checkboxDefaultValues = {};
+  Object.entries(subtasks).forEach((subtask) => {
+    checkboxDefaultValues[subtask[0]] = subtask[1] == "true" ? true : false;
+  });
 
   const methods = useForm({
     defaultValues: {
       status,
-      ...subtasks,
+      ...checkboxDefaultValues,
     },
   });
 
@@ -88,7 +88,8 @@ export function TaskView() {
           )}
           <section>
             <h3 className="text-body-md text-on-background mb-4">
-              Subtasks {subtaskArray.filter((subtask) => subtask[1]).length} of{" "}
+              Subtasks{" "}
+              {subtaskArray.filter((_, value) => value == "true").length} of{" "}
               {subtaskArray.length}
             </h3>
             <ul className="flex flex-col gap-2">
@@ -97,7 +98,7 @@ export function TaskView() {
                   <Checkbox
                     label={key}
                     name={key}
-                    checked={value}
+                    checked={value == "true" ? true : false}
                     onToggle={handleCheck}
                     submit={methods.handleSubmit(onSubmit)}
                   />
