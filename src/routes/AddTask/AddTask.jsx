@@ -65,12 +65,13 @@ export function AddTask() {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
+    const tranformedData = transformFormData(data);
     // programmatically submit a form for react-router
     // to be in-sync with react-hook-form
-    submit(data, {
+    submit(JSON.stringify(tranformedData), {
       method: "post",
       action: `/board/${params.boardId}/add-task`,
+      encType: "application/json",
     });
   };
 
@@ -132,4 +133,23 @@ export function AddTask() {
       </Modal>
     </>
   );
+}
+
+function transformFormData(obj) {
+  // Transform subtasks directly using reduce
+  const subtasks = Object.entries(obj)
+    .filter(([key]) => key.startsWith("subtask"))
+    .reduce((acc, [, value]) => {
+      acc[value] = false;
+      return acc;
+    }, {});
+
+  const data = {
+    title: obj.title,
+    description: obj.description,
+    subtasks,
+    status: obj.status,
+  };
+
+  return data;
 }

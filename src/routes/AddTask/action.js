@@ -3,53 +3,41 @@ import { db } from "../../firebase";
 import { removeDelimiter } from "../../utilities";
 import { redirect } from "react-router-dom";
 
-function transformFormData(obj) {
-  // Transform subtasks directly using reduce
-  const subtasks = Object.entries(obj)
-    .filter(([key]) => key.startsWith("subtask"))
-    .reduce((acc, [, value]) => {
-      acc[value] = false;
-      return acc;
-    }, {});
-
-  const data = {
-    title: obj.title,
-    description: obj.description,
-    subtasks,
-    status: obj.status,
-  };
-
-  return data;
-}
-
+// Main action function
 export async function action({ params, request }) {
-  // the board we want to find
+  // Extract board name from params
   const boardName = removeDelimiter(params.boardId, "-");
 
-  // Get data from AddTask Form
-  const formData = await request.formData();
+  // Get data from the task form
+  const taskFormData = await request.formData();
 
-  // query for board
-  const q = query(collection(db, "boards"), where("name", "==", boardName));
+  // Find the board in the database
+  const boardSnap = await findBoard(boardName);
 
-  // get board from db
-  const boardSnap = await getDocs(q);
-
+  // If the board doesn't exist, log a message and return
   if (boardSnap.empty) {
-    console.log("board empty");
+    console.log("Board not found");
+    return;
   }
 
-  let boardId;
-  boardSnap.forEach((doc) => {
-    boardId = doc.id;
-  });
+  // Extract the ID of the found board
+  const boardId = boardSnap.docs[0].id;
 
-  // create object from FormData
-  const task = Object.fromEntries(formData);
+  // Add the task to the board and database
+  await addTaskToBoard(boardId, taskFormData);
 
-  const docData = transformFormData(task);
-
-  await addDoc(collection(db, `boards/${boardId}/tasks`), docData);
-
+  // Redirect to the board after adding the task
   return redirect(`/board/${params.boardId}`);
+}
+
+// Function to find a board by name
+async function findBoard(boardName) {
+  const q = query(collection(db, "boards"), where("name", "==", boardName));
+  return await getDocs(q);
+}
+
+// Function to add a task to a specific board
+async function addTaskToBoard(boardId, taskFormData) {
+  const tasksCollection = collection(db, `boards/${boardId}/tasks`);
+  await addDoc(tasksCollection, taskFormData);
 }
