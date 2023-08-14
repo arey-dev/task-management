@@ -3,17 +3,22 @@ import { db } from "../../firebase";
 import { removeDelimiter } from "../../utilities";
 
 export async function loader({ params }) {
-  // the board we want to find
+  // Extract the board name from params
   const boardName = removeDelimiter(params.boardId, "-");
 
-  // query for board
-  const q = query(collection(db, "boards"), where("name", "==", boardName));
+  // Query for the board using its name
+  const boardQuery = query(
+    collection(db, "boards"),
+    where("name", "==", boardName)
+  );
 
-  // get board from db
-  const boardSnap = await getDocs(q);
+  // Get the board data from the database
+  const boardSnap = await getDocs(boardQuery);
 
+  // If the board doesn't exist, return an empty object
   if (boardSnap.empty) {
-    console.log("board empty");
+    console.log("Board not found");
+    return { columns: [], tasks: {} };
   }
 
   let boardId;
@@ -23,31 +28,28 @@ export async function loader({ params }) {
     boardData = doc.data();
   });
 
-  // get board tasks and columns
-  const columns = boardData.columns;
-  const tasks = {};
-  for (const column of columns) {
-    // create a array property in the object
-    // with key the same as column name
-    tasks[column.name] = [];
+  // Initialize an object to store tasks categorized by columns
+  const tasksByColumns = {};
 
-    // query for tasks where status is the same as the column
-    const querySnapshot = await getDocs(
+  // Loop through columns and fetch tasks for each column
+  for (const column of boardData.columns) {
+    // Initialize an array for tasks in this column
+    tasksByColumns[column.name] = [];
+
+    // Query for tasks in the current column
+    const tasksQuerySnapshot = await getDocs(
       query(
         collection(db, "boards", boardId, "tasks"),
         where("status", "==", column.name)
       )
     );
 
-    if (querySnapshot.empty) {
-      break;
-    }
-
-    // add each task on the array
-    querySnapshot.forEach((doc) => {
-      tasks[column.name].push(doc.data());
+    // Add tasks to the tasksByColumns object
+    tasksQuerySnapshot.forEach((doc) => {
+      tasksByColumns[column.name].push(doc.data());
     });
   }
 
-  return { columns, tasks };
+  // Return the categorized tasks along with column names
+  return { columns: boardData.columns, tasks: tasksByColumns };
 }
