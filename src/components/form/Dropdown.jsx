@@ -10,7 +10,7 @@ export function Dropdown({
   selectedOption,
   onOptionChange,
   submit,
-  disabled,
+  disabled = false,
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -24,9 +24,10 @@ export function Dropdown({
 
       <button
         type="button"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={disabled ? null : () => setIsOpen(!isOpen)}
         className={twJoin(
-          "flex py-2 px-4 justify-between items-center w-full border text-body-lg border-neutral-1 rounded-md outline-primary", disabled && "text-opacity-50 cursor-not-allowed"
+          "flex py-2 px-4 justify-between items-center w-full border text-body-lg border-neutral-1 rounded-md outline-primary",
+          disabled && "opacity-50"
         )}
       >
         {selected}
