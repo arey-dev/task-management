@@ -7,6 +7,7 @@ import { useFormContext } from "react-hook-form";
 const classes = {
   base: "flex-1 h-28 appearance-none border w-full py-2 px-4 bg-light-surface text-light-on-surface text-body-lg focus:outline-none focus:ring-1 focus:ring-primary  placeholder-light-on-surface placeholder-opacity-25 border-neutral-1",
   noResize: "resize-none",
+  disable: "text-opacity-25",
   rounded: {
     none: null,
     sm: "rounded-sm",
@@ -25,6 +26,7 @@ export function TextArea({ name, ...props }) {
     className = "",
     rounded = "base",
     noresize,
+    disabled,
     ...rest
   } = props;
 
@@ -37,10 +39,12 @@ export function TextArea({ name, ...props }) {
       <textarea
         id={id}
         type={type}
+        disabled={disabled}
         className={twJoin([
           classes.base,
           rounded && classes.rounded[rounded],
           noresize && classes.noResize,
+          disabled && classes.disable,
         ])}
         {...register(name)}
         {...rest}

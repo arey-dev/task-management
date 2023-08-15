@@ -8,7 +8,7 @@ const classes = {
   base: "form-input flex-1 w-full py-2 px-4 bg-light-surface text-light-on-surface text-body-lg placeholder-light-on-surface placeholder-opacity-25 border-neutral-1 focus:ring-primary",
   state: {
     error: "!border-danger focus:!ring-danger",
-    disabled: "cursor-not-allowed bg-gray-100 shadow-inner text-gray-400",
+    disabled: "text-opacity-25 shadow-inner",
   },
   rounded: {
     none: null,
@@ -26,6 +26,7 @@ export function Input({ name, ...props }) {
   } = useFormContext();
   const {
     label,
+    disabled,
     type = "text",
     className = "",
     rounded = "base",
@@ -44,11 +45,14 @@ export function Input({ name, ...props }) {
       <input
         id={id}
         type={type}
+        // disabled
         className={twJoin([
           classes.base,
           rounded && classes.rounded[rounded],
           errors[name] && classes.state.error,
+          disabled && classes.state.disabled
         ])}
+        disabled={disabled}
         {...register(name, { required: "Can't be empty" })}
         {...rest}
       />

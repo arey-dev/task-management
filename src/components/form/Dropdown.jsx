@@ -2,6 +2,7 @@
 import { useState } from "react";
 import chevronDown from "../../assets/icon-chevron-down.svg";
 import { Input } from "./Input";
+import { twJoin } from "tailwind-merge";
 
 export function Dropdown({
   name,
@@ -9,6 +10,7 @@ export function Dropdown({
   selectedOption,
   onOptionChange,
   submit,
+  disabled,
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -23,7 +25,9 @@ export function Dropdown({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex py-2 px-4 justify-between items-center w-full border text-body-lg border-neutral-1 rounded-md outline-primary"
+        className={twJoin(
+          "flex py-2 px-4 justify-between items-center w-full border text-body-lg border-neutral-1 rounded-md outline-primary", disabled && "text-opacity-50 cursor-not-allowed"
+        )}
       >
         {selected}
         <img src={chevronDown} alt="Chevron Down Icon" />
