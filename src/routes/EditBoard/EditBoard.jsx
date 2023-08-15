@@ -1,4 +1,10 @@
-import { Form, useOutletContext, useSubmit, useParams } from "react-router-dom";
+import {
+  Form,
+  useOutletContext,
+  useSubmit,
+  useParams,
+  useNavigation,
+} from "react-router-dom";
 import { Modal } from "../../components";
 import { Input } from "../../components/form";
 import { RemovableInput } from "../../components/form";
@@ -13,7 +19,9 @@ export function EditBoard() {
 
   const params = useParams(); // to read boardId params
 
-  const submit = useSubmit(); // to submit form by using react router
+  const submit = useSubmit(); // to submit form by using react
+
+  const navigation = useNavigation();
 
   // ids for initial values
   let initialColumnId = 0;
@@ -34,6 +42,14 @@ export function EditBoard() {
   const [columns, setColumns] = useState(initialColumns);
 
   const [columnId, setColumnId] = useState(initialColumnId);
+
+  // navigation state values
+  const isSubmitting = navigation.state === "submitting";
+
+  const isRedirecting =
+    navigation.state === "loading" &&
+    navigation.json != null &&
+    navigation.formAction !== navigation.location.pathname;
 
   // react-hook-form
   // destructure columnDefaultValues
@@ -77,7 +93,12 @@ export function EditBoard() {
         >
           <h2 className="text-lg">Edit Board</h2>
 
-          <Input label="Name" name="name" placeholder="e.g Web Design" />
+          <Input
+            label="Name"
+            name="name"
+            disabled={isSubmitting || isRedirecting}
+            placeholder="e.g Web Design"
+          />
 
           <section>
             <h3 className="mb-2 text-body-md text-on-background">Columns</h3>
@@ -89,19 +110,27 @@ export function EditBoard() {
                 placeholder={column.placeholder}
                 name={`column-${index}`}
                 onRemove={() => handleRemoveColumn(column.id)}
+                disabled={isSubmitting || isRedirecting}
               />
             ))}
 
             <Button
               onClick={handleAddColumn}
               variant="secondary"
+              disabled={isSubmitting || isRedirecting}
               className="w-full"
             >
               + Add New Column
             </Button>
           </section>
 
-          <Button type="submit">Save Changes</Button>
+          <Button type="submit" disabled={isSubmitting || isRedirecting}>
+            {isSubmitting
+              ? "Saving Changes"
+              : isRedirecting
+              ? "Changes saved"
+              : "Save Changes"}
+          </Button>
         </Form>
       </FormProvider>
     </Modal>
