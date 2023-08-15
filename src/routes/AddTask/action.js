@@ -9,7 +9,7 @@ export async function action({ params, request }) {
   const boardName = removeDelimiter(params.boardId, "-");
 
   // Get data from the task form
-  const taskFormData = await request.formData();
+  const task = await request.json();
 
   // Find the board in the database
   const boardSnap = await findBoard(boardName);
@@ -24,7 +24,7 @@ export async function action({ params, request }) {
   const boardId = boardSnap.docs[0].id;
 
   // Add the task to the board and database
-  await addTaskToBoard(boardId, taskFormData);
+  await addTaskToBoard(boardId, task);
 
   // Redirect to the board after adding the task
   return redirect(`/board/${params.boardId}`);
@@ -37,7 +37,7 @@ async function findBoard(boardName) {
 }
 
 // Function to add a task to a specific board
-async function addTaskToBoard(boardId, taskFormData) {
+async function addTaskToBoard(boardId, taskData) {
   const tasksCollection = collection(db, `boards/${boardId}/tasks`);
-  await addDoc(tasksCollection, taskFormData);
+  await addDoc(tasksCollection, taskData);
 }
