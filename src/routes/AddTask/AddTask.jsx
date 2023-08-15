@@ -1,4 +1,4 @@
-import { Form, useParams } from "react-router-dom";
+import { Form, useNavigation, useParams } from "react-router-dom";
 import { Modal } from "../../components";
 import { Input } from "../../components/form";
 import { TextArea } from "../../components/form";
@@ -29,9 +29,19 @@ export function AddTask() {
     },
   });
 
+  const navigation = useNavigation();
+
   const params = useParams(); // to read boardId params
 
   const submit = useSubmit(); // to submit form by using react router
+
+  // navigation state values
+  const isSubmitting = navigation.state === "submitting";
+
+  const isRedirecting =
+    navigation.state === "loading" &&
+    navigation.json != null &&
+    navigation.formAction !== navigation.location.pathname;
 
   // set dropdown option (ui only)
   const [selectedOption, setSelectedOption] = useState(
@@ -90,6 +100,7 @@ export function AddTask() {
               label="Title"
               name="title"
               placeholder="e.g. Take coffee break"
+              disabled={isRedirecting || isSubmitting}
             />
 
             <TextArea
@@ -97,6 +108,7 @@ export function AddTask() {
               name="description"
               placeholder="e.g. its's always good to take a break. This 15 minutes break will recharge the batteries a little."
               noresize
+              disabled={isRedirecting || isSubmitting}
             />
 
             <section>
@@ -109,11 +121,13 @@ export function AddTask() {
                   placeholder={subtask?.placeholder}
                   name={`subtask-${index}`}
                   onRemove={() => handleRemoveSubtask(subtask.id)}
+                  disabled={isRedirecting || isSubmitting}
                 />
               ))}
               <Button
                 onClick={handleAddSubtask}
                 variant="secondary"
+                disabled={isRedirecting || isSubmitting}
                 className="w-full"
               >
                 + Add New Subtask
@@ -125,9 +139,16 @@ export function AddTask() {
               options={initialDropdownOptions}
               selectedOption={selectedOption}
               onOptionChange={handleDropdownOptionChange}
+              disabled={isRedirecting || isSubmitting}
             />
 
-            <Button type="submit">Create Task</Button>
+            <Button type="submit" disabled={isRedirecting || isSubmitting}>
+              {isSubmitting
+                ? "Creating task"
+                : isRedirecting
+                ? "Task Created"
+                : "Create task"}
+            </Button>
           </Form>
         </FormProvider>
       </Modal>
