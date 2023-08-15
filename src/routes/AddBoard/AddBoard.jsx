@@ -1,4 +1,4 @@
-import { Form, useSubmit } from "react-router-dom";
+import { Form, useSubmit, useNavigation } from "react-router-dom";
 import { Modal } from "../../components";
 import { Input } from "../../components/form";
 import { RemovableInput } from "../../components/form";
@@ -18,8 +18,18 @@ export function AddBoard() {
 
   const submit = useSubmit();
 
+  const navigation = useNavigation();
+
   // multiple column state for board
   const [columns, setColumns] = useState(initialColumns);
+
+  // navigation state values
+  const isSubmitting = navigation.state === "submitting";
+
+  const isRedirecting =
+    navigation.state === "loading" &&
+    navigation.json != null &&
+    navigation.formAction !== navigation.location.pathname;
 
   // handler for adding a column for a board
   const handleAddColumn = () => {
@@ -58,7 +68,12 @@ export function AddBoard() {
         >
           <h2 className="text-lg">Add New Board</h2>
 
-          <Input label="Name" name="name" placeholder="e.g Web Design" />
+          <Input
+            label="Name"
+            name="name"
+            disabled={isSubmitting || isRedirecting}
+            placeholder="e.g Web Design"
+          />
 
           <section>
             <h3 className="mb-2 text-body-md text-on-background">Columns</h3>
@@ -71,19 +86,27 @@ export function AddBoard() {
                 placeholder={column.placeholder}
                 name={`column-${index}`}
                 onRemove={() => handleRemoveColumn(column.id)}
+                disabled={isSubmitting || isRedirecting}
               />
             ))}
 
             <Button
               onClick={handleAddColumn}
               variant="secondary"
+              disabled={isSubmitting || isRedirecting}
               className="w-full"
             >
               + Add New Column
             </Button>
           </section>
 
-          <Button type="submit">Create New Board</Button>
+          <Button type="submit" disabled={isSubmitting || isRedirecting}>
+            {isSubmitting
+              ? "Creating Board"
+              : isRedirecting
+              ? "Board Created"
+              : "Create Board"}
+          </Button>
         </Form>
       </FormProvider>
     </Modal>
