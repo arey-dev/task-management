@@ -18,15 +18,10 @@ export function TaskView() {
 
   const fetcher = useFetcher();
 
-  const checkboxDefaultValues = {};
-  Object.entries(subtasks).forEach((subtask) => {
-    checkboxDefaultValues[subtask[0]] = subtask[1] == "true" ? true : false;
-  });
-
   const methods = useForm({
     defaultValues: {
       status,
-      ...checkboxDefaultValues,
+      ...subtasks,
     },
   });
 
@@ -50,9 +45,10 @@ export function TaskView() {
   const subtaskArray = Object.entries(subtasks);
 
   const onSubmit = (data) => {
-    fetcher.submit(data, {
+    fetcher.submit(JSON.stringify(data), {
       method: "post",
       action: `/board/${params.boardId}/task/${params.taskId}`,
+      encType: "application/json",
     });
   };
 
@@ -80,7 +76,7 @@ export function TaskView() {
                 title,
                 description,
                 status,
-                subtasks,
+                subtasks: subtaskArray,
               }}
             />
           </header>
@@ -89,8 +85,7 @@ export function TaskView() {
           )}
           <section>
             <h3 className="text-body-md text-on-background mb-4">
-              Subtasks{" "}
-              {subtaskArray.filter((_, value) => value == "true").length} of{" "}
+              Subtasks {subtaskArray.filter(([, value]) => value).length} of{" "}
               {subtaskArray.length}
             </h3>
             <ul className="flex flex-col gap-2">
@@ -99,7 +94,7 @@ export function TaskView() {
                   <Checkbox
                     label={key}
                     name={key}
-                    checked={value == "true" ? true : false}
+                    checked={value}
                     onToggle={handleCheck}
                     submit={methods.handleSubmit(onSubmit)}
                   />
