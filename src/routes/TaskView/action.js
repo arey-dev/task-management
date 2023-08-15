@@ -10,8 +10,7 @@ import { db } from "../../firebase";
 import { removeDelimiter } from "../../utilities";
 
 export async function action({ request, params }) {
-  const formData = await request.formData();
-  const data = Object.fromEntries(formData);
+  const data = await request.json();
 
   const { status, ...subtasks } = data;
 
