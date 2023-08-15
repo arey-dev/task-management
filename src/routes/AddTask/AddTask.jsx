@@ -7,12 +7,7 @@ import { RemovableInput } from "../../components/form";
 import { Dropdown } from "../../components/form";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useSubmit } from "react-router-dom";
-
-const initialDropdownOptions = [
-  { id: 0, value: "Todo" },
-  { id: 1, value: "Doing" },
-];
+import { useSubmit, useOutletContext } from "react-router-dom";
 
 const initialSubtasks = [
   { id: 0, placeholder: "e.g. Make coffee" },
@@ -22,10 +17,22 @@ const initialSubtasks = [
 let nextSubtasksId = initialSubtasks.length;
 
 export function AddTask() {
+  // get board columns
+  const columns = useOutletContext();
+
+  // status dropdown options
+  let columnId = 0;
+  const dropdownOptions = [];
+
+  // set board columns as status dropdown option
+  for (const column of columns) {
+    dropdownOptions.push({ id: columnId++, value: column.name });
+  }
+
   // react-hook-form
   const methods = useForm({
     defaultValues: {
-      status: initialDropdownOptions[0].value,
+      status: dropdownOptions[0].value,
     },
   });
 
@@ -45,7 +52,7 @@ export function AddTask() {
 
   // set dropdown option (ui only)
   const [selectedOption, setSelectedOption] = useState(
-    initialDropdownOptions[0]
+    dropdownOptions[0]
   );
 
   const [subtasks, setSubtasks] = useState(initialSubtasks);
@@ -136,7 +143,7 @@ export function AddTask() {
 
             <Dropdown
               name="status"
-              options={initialDropdownOptions}
+              options={dropdownOptions}
               selectedOption={selectedOption}
               onOptionChange={handleDropdownOptionChange}
               disabled={isRedirecting || isSubmitting}
