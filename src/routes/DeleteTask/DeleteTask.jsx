@@ -1,10 +1,19 @@
 /* eslint-disable react/prop-types */
 import { Modal } from "../../components";
-import { Form, useParams } from "react-router-dom";
+import { Form, useParams, useNavigation } from "react-router-dom";
 import { Button } from "../../components/ui";
 
 export function DeleteTask() {
   const params = useParams();
+
+  const navigation = useNavigation();
+
+  // navigation state values
+  const isSubmitting = navigation.state === "submitting";
+
+  const isRedirecting =
+    navigation.state === "loading" &&
+    navigation.formAction !== navigation.location.pathname;
 
   return (
     <Modal>
@@ -19,10 +28,19 @@ export function DeleteTask() {
           and its subtasks? This action cannot be reversed.{" "}
         </p>
         <div className="flex justify-between gap-4">
-          <Button type="submit" variant="danger" className="w-full">
-            Delete
+          <Button
+            type="submit"
+            variant="danger"
+            disabled={isSubmitting || isRedirecting}
+            className="w-full"
+          >
+            {isSubmitting || isRedirecting ? "Deleting Task" : "Delete Task"}
           </Button>
-          <Button variant="secondary" className="w-full">
+          <Button
+            variant="secondary"
+            disabled={isSubmitting || isRedirecting}
+            className="w-full"
+          >
             Cancel
           </Button>
         </div>
