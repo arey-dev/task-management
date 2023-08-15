@@ -3,6 +3,7 @@ import {
   useLocation,
   useOutletContext,
   useParams,
+  useNavigation,
 } from "react-router-dom";
 import { Modal } from "../../components";
 import { Input } from "../../components/form";
@@ -38,28 +39,39 @@ export function EditTask() {
   // create an object that will store the default values of
   // react-hook-form's input
   let defaultValIndex = 0;
-  const subtaskDefaultValues = {
+  const defaultValues = {
     title: state.title,
     description: state.description,
     status: state.status,
   };
 
-  for (const subtask of state.subtasks) {
-    initialSubtasks.push({ id: initialSubtaskId++, title: subtask.title });
-    subtaskDefaultValues[`subtask-${defaultValIndex++}`] = subtask.title;
+  // eslint-disable-next-line no-unused-vars
+  for (const [key, value] of state.subtasks) {
+    initialSubtasks.push({ id: initialSubtaskId++, title: key });
+    defaultValues[`subtask-${defaultValIndex++}`] = key;
   }
 
   // react-hook-form
   const methods = useForm({
     defaultValues: {
-      // destructure subtaskDefaultValues
-      ...subtaskDefaultValues,
+      // destructure defaultValues
+      ...defaultValues,
     },
   });
 
   const params = useParams(); // to read boardId params
 
   const submit = useSubmit(); // to submit form by using react router
+
+  const navigation = useNavigation();
+
+  // navigation state values
+  const isSubmitting = navigation.state === "submitting";
+
+  const isRedirecting =
+    navigation.state === "loading" &&
+    navigation.json != null &&
+    navigation.formAction !== navigation.location.pathname;
 
   // set dropdown option (ui only)
   const [selectedOption, setSelectedOption] = useState(state.status);
@@ -97,6 +109,7 @@ export function EditTask() {
   const onSubmit = (data) => {
     const updatedData = transformFormData(data, state);
 
+    console.log(updatedData);
     // submit data as json to preserve
     // the shape of the data
     submit(JSON.stringify(updatedData), {
@@ -121,6 +134,7 @@ export function EditTask() {
               label="Title"
               name="title"
               placeholder="e.g. Take coffee break"
+              disabled={isSubmitting || isRedirecting}
             />
 
             <TextArea
@@ -128,6 +142,7 @@ export function EditTask() {
               name="description"
               placeholder="e.g. its's always good to take a break. This 15 minutes break will recharge the batteries a little."
               noresize
+              disabled={isSubmitting || isRedirecting}
             />
 
             <section>
@@ -142,11 +157,13 @@ export function EditTask() {
                   // to display the current task's subtasks on ui
                   name={`subtask-${index}`}
                   onRemove={() => handleRemoveSubtask(subtask.id)}
+                  disabled={isSubmitting || isRedirecting}
                 />
               ))}
               <Button
                 onClick={handleAddSubtask}
                 variant="secondary"
+                disabled={isSubmitting || isRedirecting}
                 className="w-full"
               >
                 + Add New Subtask
@@ -158,9 +175,16 @@ export function EditTask() {
               options={dropdownOptions}
               selectedOption={selectedOption}
               onOptionChange={handleDropdownOptionChange}
+              disabled={isRedirecting || isSubmitting}
             />
 
-            <Button type="submit">Save Changes</Button>
+            <Button type="submit" disabled={isSubmitting || isRedirecting}>
+              {isSubmitting
+                ? "Saving Changes"
+                : isRedirecting
+                ? "Changes saved"
+                : "Save Changes"}
+            </Button>
           </Form>
         </FormProvider>
       </Modal>
@@ -174,21 +198,17 @@ function transformFormData(obj, prevState) {
   // Create a Set of titles of completed subtasks from the prevState
   // use a Set to store the completed subtask titles, which provides faster lookup
   const completedSubtaskTitles = new Set(
-    prevState.subtasks
-      .filter((subtask) => subtask.isCompleted)
-      .map((subtask) => subtask.title)
+    prevState.subtasks.filter(([, value]) => value).map(([key]) => key)
   );
 
-  // Initialize an array to store transformed subtasks
+  // Transform subtasks directly using reduce
   const subtasks = Object.entries(obj)
     // Filter only properties that start with "subtask"
     .filter(([key]) => key.startsWith("subtask"))
-    // Map the filtered properties to an array of subtask objects
-    // eslint-disable-next-line no-unused-vars
-    .map(([key, value]) => ({
-      title: value,
-      isCompleted: completedSubtaskTitles.has(value), // Check if the subtask title is completed
-    }));
+    .reduce((acc, [, value]) => {
+      acc[value] = completedSubtaskTitles.has(value); // Check if the subtask title is completed
+      return acc;
+    }, {});
 
   // Create the final data object with transformed subtasks
   const data = {
