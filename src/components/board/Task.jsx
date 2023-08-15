@@ -5,9 +5,7 @@ import { hypenateString } from "../../utilities";
 export function Task({ task }) {
   const { title, subtasks } = task;
 
-  const subtaskCompleted = Object.values(subtasks).filter(
-    (subtask) => subtask === "true"
-  ).length;
+  const subtaskCompleted = Object.values(subtasks).filter((value) => value).length;
 
   const subtaskCount = Object.keys(subtasks).length;
 
