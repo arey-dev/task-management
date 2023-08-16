@@ -5,6 +5,7 @@ import { Board, loader as BoardLoader } from "./routes/Board";
 import { AddBoard, action as AddBoardAction } from "./routes/AddBoard";
 import { EditBoard, action as EditBoardAction } from "./routes/EditBoard";
 import { DeleteBoard, action as DeleteBoardAction } from "./routes/DeleteBoard";
+import { AddColumn, action as AddColumnAction } from "./routes/AddColumn";
 import { AddTask, action as AddTaskAction } from "./routes/AddTask";
 import { EditTask, action as EditTaskAction } from "./routes/EditTask";
 import { DeleteTask, action as DeleteTaskAction } from "./routes/DeleteTask";
@@ -28,6 +29,11 @@ const router = createBrowserRouter([
         loader: BoardLoader,
         children: [
           {
+            path: "add-board",
+            element: <AddBoard />,
+            action: AddBoardAction,
+          },
+          {
             path: "edit-board",
             element: <EditBoard />,
             action: EditBoardAction,
@@ -36,6 +42,11 @@ const router = createBrowserRouter([
             path: "delete-board",
             element: <DeleteBoard />,
             action: DeleteBoardAction,
+          },
+          {
+            path: "add-column",
+            element: <AddColumn />,
+            action: AddColumnAction,
           },
           {
             path: "add-task",
@@ -57,11 +68,6 @@ const router = createBrowserRouter([
             path: "task/:taskId/delete-task",
             element: <DeleteTask />,
             action: DeleteTaskAction,
-          },
-          {
-            path: "add-board",
-            element: <AddBoard />,
-            action: AddBoardAction,
           },
         ],
       },
