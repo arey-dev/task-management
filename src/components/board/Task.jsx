@@ -16,7 +16,7 @@ export function Task({ task }) {
   return (
     <section
       onClick={() =>
-        navigate(`/board/${boardId}/task/${hypenateString(title)}`)
+        navigate(`/board/${boardId}/task/${hypenateString(title)}`, {state: task})
       }
       className="bg-light-surface rounded-lg task-shadow px-4 py-6 last-of-type:last:mb-12 cursor-pointer text-light-on-surface hover:text-primary"
     >

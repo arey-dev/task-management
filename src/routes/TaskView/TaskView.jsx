@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import {
   useFetcher,
-  useLoaderData,
+  useLocation,
   useOutletContext,
   useParams,
 } from "react-router-dom";
@@ -13,8 +13,8 @@ import { FormProvider, useForm } from "react-hook-form";
 
 export function TaskView() {
   const {
-    task: { title, description, status, subtasks },
-  } = useLoaderData();
+    state: { title, description, status, subtasks },
+  } = useLocation();
 
   const fetcher = useFetcher();
 

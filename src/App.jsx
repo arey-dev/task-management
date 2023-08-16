@@ -10,7 +10,7 @@ import { EditTask, action as EditTaskAction } from "./routes/EditTask";
 import { DeleteTask, action as DeleteTaskAction } from "./routes/DeleteTask";
 import {
   TaskView,
-  loader as TaskViewLoader,
+  // loader as TaskViewLoader,
   action as TaskViewAction,
 } from "./routes/TaskView";
 
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
           {
             path: "task/:taskId",
             element: <TaskView />,
-            loader: TaskViewLoader,
+            // loader: TaskViewLoader,
             action: TaskViewAction,
           },
           {
