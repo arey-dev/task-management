@@ -1,14 +1,4 @@
-import {
-  doc,
-  getDocs,
-  query,
-  where,
-  collection,
-  updateDoc,
-  arrayUnion,
-} from "firebase/firestore";
-import { db } from "../../firebase";
-import { removeDelimiter } from "../../utilities";
+import { removeDelimiter, findBoard, addColumn } from "../../utilities";
 import { redirect } from "react-router-dom";
 
 export async function action({ request, params }) {
@@ -35,17 +25,4 @@ export async function action({ request, params }) {
 
   // Redirect to the board after adding the task
   return redirect(`/board/${params.boardId}`);
-}
-
-// Function to find a board by name
-async function findBoard(boardName) {
-  const q = query(collection(db, "boards"), where("name", "==", boardName));
-  return await getDocs(q);
-}
-
-async function addColumn(boardId, column) {
-  const boardRef = doc(db, "boards", boardId);
-  await updateDoc(boardRef, {
-    columns: arrayUnion({ ...column }),
-  });
 }

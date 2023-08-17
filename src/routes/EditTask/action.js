@@ -1,14 +1,9 @@
-import {
-  doc,
-  updateDoc,
-  collection,
-  where,
-  query,
-  getDocs,
-} from "firebase/firestore";
-import { db } from "../../firebase";
 import { redirect } from "react-router-dom";
-import { removeDelimiter } from "../../utilities";
+import {
+  findBoardAndTaskIds,
+  updateTask,
+  removeDelimiter,
+} from "../../utilities";
 
 export async function action({ params, request }) {
   // Get updated task data from the request JSON
@@ -32,38 +27,4 @@ export async function action({ params, request }) {
 
   // Redirect to the board
   return redirect(`/board/${params.boardId}`);
-}
-
-// Function to find board and task IDs
-async function findBoardAndTaskIds(boardName, taskName) {
-  const qBoard = query(
-    collection(db, "boards"),
-    where("name", "==", boardName)
-  );
-  const boardSnap = await getDocs(qBoard);
-
-  if (boardSnap.empty) {
-    return { boardId: null, taskId: null };
-  }
-
-  const boardId = boardSnap.docs[0].id;
-
-  const qTask = query(
-    collection(db, `boards/${boardId}/tasks`),
-    where("title", "==", taskName)
-  );
-  const taskSnap = await getDocs(qTask);
-
-  if (taskSnap.empty) {
-    return { boardId: null, taskId: null };
-  }
-
-  const taskId = taskSnap.docs[0].id;
-
-  return { boardId, taskId };
-}
-
-// Function to update a task in Firestore
-async function updateTask(boardId, taskId, updatedTaskData) {
-  await updateDoc(doc(db, `boards/${boardId}/tasks`, taskId), updatedTaskData);
 }

@@ -1,6 +1,4 @@
-import { addDoc, query, collection, where, getDocs } from "firebase/firestore";
-import { db } from "../../firebase";
-import { removeDelimiter } from "../../utilities";
+import { removeDelimiter, findBoard, addTaskToBoard } from "../../utilities";
 import { redirect } from "react-router-dom";
 
 // Main action function
@@ -28,16 +26,4 @@ export async function action({ params, request }) {
 
   // Redirect to the board after adding the task
   return redirect(`/board/${params.boardId}`);
-}
-
-// Function to find a board by name
-async function findBoard(boardName) {
-  const q = query(collection(db, "boards"), where("name", "==", boardName));
-  return await getDocs(q);
-}
-
-// Function to add a task to a specific board
-async function addTaskToBoard(boardId, taskData) {
-  const tasksCollection = collection(db, `boards/${boardId}/tasks`);
-  await addDoc(tasksCollection, taskData);
 }
