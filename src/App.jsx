@@ -14,67 +14,79 @@ import {
   // loader as TaskViewLoader,
   action as TaskViewAction,
 } from "./routes/TaskView";
+import { PrivateRoute } from "./routes/PrivateRoute";
+import { Login, action as LoginAction } from "./routes/Login";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Root />,
-    loader: RootLoader,
-    // errorElement:
+    path: "/login",
+    element: <Login />,
+    action: LoginAction,
+  },
+  {
+    element: <PrivateRoute />,
     children: [
-      { index: true, element: <Welcome /> },
       {
-        path: "/board/:boardId",
-        element: <Board />,
-        loader: BoardLoader,
+        path: "/",
+        element: <Root />,
+        loader: RootLoader,
+        // errorElement:
         children: [
+          { index: true, element: <Welcome /> },
           {
-            path: "add-board",
+            path: "/board/:boardId",
+            element: <Board />,
+            loader: BoardLoader,
+            children: [
+              {
+                path: "add-board",
+                element: <AddBoard />,
+                action: AddBoardAction,
+              },
+              {
+                path: "edit-board",
+                element: <EditBoard />,
+                action: EditBoardAction,
+              },
+              {
+                path: "delete-board",
+                element: <DeleteBoard />,
+                action: DeleteBoardAction,
+              },
+              {
+                path: "add-column",
+                element: <AddColumn />,
+                action: AddColumnAction,
+              },
+              {
+                path: "add-task",
+                element: <AddTask />,
+                action: AddTaskAction,
+              },
+              {
+                path: "task/:taskId",
+                element: <TaskView />,
+                // loader: TaskViewLoader,
+                action: TaskViewAction,
+              },
+              {
+                path: "task/:taskId/edit-task",
+                element: <EditTask />,
+                action: EditTaskAction,
+              },
+              {
+                path: "task/:taskId/delete-task",
+                element: <DeleteTask />,
+                action: DeleteTaskAction,
+              },
+            ],
+          },
+          {
+            path: "/board/add-board",
             element: <AddBoard />,
             action: AddBoardAction,
           },
-          {
-            path: "edit-board",
-            element: <EditBoard />,
-            action: EditBoardAction,
-          },
-          {
-            path: "delete-board",
-            element: <DeleteBoard />,
-            action: DeleteBoardAction,
-          },
-          {
-            path: "add-column",
-            element: <AddColumn />,
-            action: AddColumnAction,
-          },
-          {
-            path: "add-task",
-            element: <AddTask />,
-            action: AddTaskAction,
-          },
-          {
-            path: "task/:taskId",
-            element: <TaskView />,
-            // loader: TaskViewLoader,
-            action: TaskViewAction,
-          },
-          {
-            path: "task/:taskId/edit-task",
-            element: <EditTask />,
-            action: EditTaskAction,
-          },
-          {
-            path: "task/:taskId/delete-task",
-            element: <DeleteTask />,
-            action: DeleteTaskAction,
-          },
         ],
-      },
-      {
-        path: "/board/add-board",
-        element: <AddBoard />,
-        action: AddBoardAction,
       },
     ],
   },
