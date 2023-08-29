@@ -6,6 +6,7 @@ import {
   updateDoc,
   collection,
   getDocs,
+  setDoc,
   addDoc,
   deleteDoc,
 } from "firebase/firestore";
@@ -19,6 +20,11 @@ export function hypenateString(string) {
 export function removeDelimiter(string, delimiter) {
   // Split the string at each delimiter and then join with spaces
   return string.split(delimiter).join(" ");
+}
+
+export async function addUser(user) {
+  const userRef = doc(db, "users", user.uid);
+  await setDoc(userRef);
 }
 
 // Function to find a board by name
@@ -54,13 +60,11 @@ export async function updateTaskData(boardId, taskId, subtasks, status) {
   });
 }
 
-
 // Function to add a task to a specific board
 export async function addTaskToBoard(boardId, taskData) {
   const tasksCollection = collection(db, `boards/${boardId}/tasks`);
   await addDoc(tasksCollection, taskData);
 }
-
 
 // Function to update a task in Firestore
 export async function updateTask(boardId, taskId, updatedTaskData) {
