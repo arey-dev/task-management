@@ -43,7 +43,6 @@ export function Login() {
             type="email"
             label="Email"
             name="email"
-            placeholder="e.g. john.doe@gmail.com"
             disabled={isRedirecting || isSubmitting}
           />
 
