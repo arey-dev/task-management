@@ -13,8 +13,8 @@ export async function action({ request }) {
       email,
       password
     );
+
     const user = userCredential.user;
-    console.log(user);
     return user;
   } catch (error) {
     return error;
