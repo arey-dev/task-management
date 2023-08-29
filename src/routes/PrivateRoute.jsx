@@ -1,6 +1,8 @@
 import { Outlet, Navigate } from "react-router-dom";
+import { auth } from "../firebase";
 
 export function PrivateRoute() {
-  let auth = false;
-  return auth ? <Outlet /> : <Navigate to="/login" />;
+  const user = auth.currentUser;
+
+  return user ? <Outlet /> : <Navigate to="/login" />;
 }
