@@ -55,7 +55,10 @@ export function Signup() {
         <p className="text-sm">
           Already have an account?{" "}
           {
-            <Link to="/login" className="inline-block text-primary hover:-translate-y-[2px] transition">
+            <Link
+              to="/login"
+              className="inline-block text-primary hover:-translate-y-[2px] transition"
+            >
               Login here
             </Link>
           }

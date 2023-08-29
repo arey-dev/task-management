@@ -24,7 +24,7 @@ export function removeDelimiter(string, delimiter) {
 
 export async function addUser(user) {
   const userRef = doc(db, "users", user.uid);
-  await setDoc(userRef);
+  await setDoc(userRef, { uid: user.uid, email: user.email });
 }
 
 // Function to find a board by name

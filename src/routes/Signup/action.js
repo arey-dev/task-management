@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { redirect } from "react-router-dom";
+import { addUser } from "../../utilities";
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -9,7 +10,14 @@ export async function action({ request }) {
   const password = formData.get("password");
 
   try {
-    await createUserWithEmailAndPassword(auth, email, password);
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    const user = userCredential.user;
+    await addUser(user);
 
     return redirect("/login");
   } catch (error) {
