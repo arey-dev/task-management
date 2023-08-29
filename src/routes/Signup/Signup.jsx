@@ -25,7 +25,7 @@ export function Signup() {
     // to be in-sync with react-hook-form
     submit(data, {
       method: "post",
-      action: `/login`,
+      action: `/signup`,
     });
   };
 
