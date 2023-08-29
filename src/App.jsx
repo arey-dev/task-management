@@ -10,10 +10,10 @@ import { AddTask, action as AddTaskAction } from "./routes/AddTask";
 import { EditTask, action as EditTaskAction } from "./routes/EditTask";
 import { DeleteTask, action as DeleteTaskAction } from "./routes/DeleteTask";
 import { TaskView, action as TaskViewAction } from "./routes/TaskView";
-import { PrivateRoute } from "./routes/PrivateRoute";
 import { Login, action as LoginAction } from "./routes/Login";
 import { Signup, action as SignupAction } from "./routes/Signup";
 import { AuthLayout } from "./routes/AuthLayout";
+import { PrivateRoute } from "./routes/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Welcome /> },
           {
-            path: "/board/:boardId",
+            path: "board/:boardId",
             element: <Board />,
             loader: BoardLoader,
             children: [
@@ -90,7 +90,7 @@ const router = createBrowserRouter([
             ],
           },
           {
-            path: "/board/add-board",
+            path: "board/add-board",
             element: <AddBoard />,
             action: AddBoardAction,
           },
