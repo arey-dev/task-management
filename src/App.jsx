@@ -9,19 +9,27 @@ import { AddColumn, action as AddColumnAction } from "./routes/AddColumn";
 import { AddTask, action as AddTaskAction } from "./routes/AddTask";
 import { EditTask, action as EditTaskAction } from "./routes/EditTask";
 import { DeleteTask, action as DeleteTaskAction } from "./routes/DeleteTask";
-import {
-  TaskView,
-  // loader as TaskViewLoader,
-  action as TaskViewAction,
-} from "./routes/TaskView";
+import { TaskView, action as TaskViewAction } from "./routes/TaskView";
 import { PrivateRoute } from "./routes/PrivateRoute";
 import { Login, action as LoginAction } from "./routes/Login";
+import { Signup, action as SignupAction } from "./routes/Signup";
+import { AuthLayout } from "./routes/AuthLayout";
 
 const router = createBrowserRouter([
   {
-    path: "/login",
-    element: <Login />,
-    action: LoginAction,
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "/login",
+        element: <Login />,
+        action: LoginAction,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
+        action: SignupAction,
+      },
+    ],
   },
   {
     element: <PrivateRoute />,
