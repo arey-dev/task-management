@@ -1,5 +1,4 @@
 import { Form, Link, useNavigation } from "react-router-dom";
-import { Flex } from "../../components";
 import { Input } from "../../components/form";
 import { Button } from "../../components/ui";
 import { FormProvider, useForm } from "react-hook-form";
@@ -31,46 +30,47 @@ export function Login() {
   };
 
   return (
-    <Flex center className="h-screen">
-      <FormProvider {...methods}>
-        <Form
-          className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md"
-          onSubmit={methods.handleSubmit(onSubmit)}
-        >
-          <h2 className="text-lg">Login</h2>
+    <FormProvider {...methods}>
+      <Form
+        className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md"
+        onSubmit={methods.handleSubmit(onSubmit)}
+      >
+        <h2 className="text-lg">Login</h2>
 
-          <Input
-            type="email"
-            label="Email"
-            name="email"
-            disabled={isRedirecting || isSubmitting}
-          />
+        <Input
+          type="email"
+          label="Email"
+          name="email"
+          disabled={isRedirecting || isSubmitting}
+        />
 
-          <Input
-            type="password"
-            label="Password"
-            name="password"
-            disabled={isRedirecting || isSubmitting}
-          />
+        <Input
+          type="password"
+          label="Password"
+          name="password"
+          disabled={isRedirecting || isSubmitting}
+        />
 
-          <p className="text-sm">
-            No account yet?{" "}
-            {
-              <Link className="inline-block text-primary hover:-translate-y-[2px] transition">
-                Create an account
-              </Link>
-            }
-          </p>
+        <p className="text-sm">
+          No account yet?{" "}
+          {
+            <Link
+              to="/signup"
+              className="inline-block text-primary hover:-translate-y-[2px] transition"
+            >
+              Create an account
+            </Link>
+          }
+        </p>
 
-          <Button type="submit" disabled={isRedirecting || isSubmitting}>
-            {isSubmitting
-              ? "Authenticating..."
-              : isRedirecting
-              ? "Logged In"
-              : "Log in"}
-          </Button>
-        </Form>
-      </FormProvider>
-    </Flex>
+        <Button type="submit" disabled={isRedirecting || isSubmitting}>
+          {isSubmitting
+            ? "Authenticating..."
+            : isRedirecting
+            ? "Logged In"
+            : "Log in"}
+        </Button>
+      </Form>
+    </FormProvider>
   );
 }
