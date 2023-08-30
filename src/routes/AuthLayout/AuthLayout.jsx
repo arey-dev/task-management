@@ -1,8 +1,9 @@
-import { Navigate, Outlet, useLoaderData } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { Flex } from "../../components";
+import { useAuthState } from "../../hooks";
 
 export function AuthLayout() {
-  const user = useLoaderData();
+  const user = useAuthState();
 
   return (
     <Flex center className="h-screen">
