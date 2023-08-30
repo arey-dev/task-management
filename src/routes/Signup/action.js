@@ -19,7 +19,7 @@ export async function action({ request }) {
     const user = userCredential.user;
     await addUser(user);
 
-    return redirect("/login");
+    return redirect("/");
   } catch (error) {
     return error;
   }
