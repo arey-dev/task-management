@@ -9,7 +9,13 @@ export async function action({ request }) {
   const password = formData.get("password");
 
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const userCredentials = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredentials.user;
+    localStorage.setItem("user", JSON.stringify(user));
 
     return redirect("/");
   } catch (error) {

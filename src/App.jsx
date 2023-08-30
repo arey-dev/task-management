@@ -12,12 +12,13 @@ import { DeleteTask, action as DeleteTaskAction } from "./routes/DeleteTask";
 import { TaskView, action as TaskViewAction } from "./routes/TaskView";
 import { Login, action as LoginAction } from "./routes/Login";
 import { Signup, action as SignupAction } from "./routes/Signup";
-import { AuthLayout } from "./routes/AuthLayout";
+import { AuthLayout, loader as AuthLayoutLoader } from "./routes/AuthLayout";
 import { PrivateRoute } from "./routes/PrivateRoute";
 
 const router = createBrowserRouter([
   {
     element: <AuthLayout />,
+    loader: AuthLayoutLoader,
     children: [
       {
         path: "/login",
