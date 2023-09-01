@@ -1,7 +1,15 @@
 import { removeDelimiter, findBoard, addColumn } from "../../utilities";
 import { redirect } from "react-router-dom";
+import { auth } from "../../firebase";
 
 export async function action({ request, params }) {
+  const user = auth.currentUser;
+
+  if (!user) {
+    console.log("user not found");
+    return null;
+  }
+
   // Extract board name from params
   const boardName = removeDelimiter(params.boardId, "-");
 
@@ -9,7 +17,7 @@ export async function action({ request, params }) {
   const column = await request.json();
 
   // Find the board in the database
-  const boardSnap = await findBoard(boardName);
+  const boardSnap = await findBoard(user.uid, boardName);
 
   // If the board doesn't exist, log a message and return
   if (boardSnap.empty) {
@@ -21,7 +29,7 @@ export async function action({ request, params }) {
   const boardId = boardSnap.docs[0].id;
 
   // add new column to board
-  addColumn(boardId, column);
+  addColumn(user.uid, boardId, column);
 
   // Redirect to the board after adding the task
   return redirect(`/board/${params.boardId}`);

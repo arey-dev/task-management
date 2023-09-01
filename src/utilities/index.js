@@ -59,8 +59,8 @@ export async function updateBoard(boardId, updatedBoardData) {
   await updateDoc(doc(db, "boards", boardId), updatedBoardData);
 }
 
-export async function addColumn(boardId, column) {
-  const boardRef = doc(db, "boards", boardId);
+export async function addColumn(uid, boardId, column) {
+  const boardRef = doc(db, `users/${uid}/boards`, boardId);
   await updateDoc(boardRef, {
     columns: arrayUnion({ ...column }),
   });
