@@ -37,14 +37,6 @@ export async function findBoard(uid, boardName) {
   return await getDocs(q);
 }
 
-export async function findTask(boardId, taskName) {
-  const q = query(
-    collection(db, `boards/${boardId}/tasks`),
-    where("title", "==", taskName)
-  );
-  return await getDocs(q);
-}
-
 export async function findTaskByStatus(uid, boardId, columnName) {
   const q = query(
     collection(db, `users/${uid}/boards/${boardId}/tasks`),
