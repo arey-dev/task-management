@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 import { Modal } from "../../components";
-import { Form, useNavigation, useParams } from "react-router-dom";
+import { Form, useNavigate, useNavigation, useParams } from "react-router-dom";
 import { Button } from "../../components/ui";
 
 export function DeleteBoard() {
   const params = useParams();
+
+  const navigate = useNavigate();
 
   const navigation = useNavigation();
 
@@ -40,6 +42,7 @@ export function DeleteBoard() {
           <Button
             variant="secondary"
             disabled={isSubmitting || isRedirecting}
+            onClick={() => navigate(-1)}
             className="w-full"
           >
             Cancel
