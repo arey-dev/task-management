@@ -4,14 +4,22 @@ import {
   findBoardAndTaskIds,
   deleteTask,
 } from "../../utilities";
+import { auth } from "../../firebase";
 
 export async function action({ params }) {
+  // current user
+  const user = auth.currentUser;
+
   // Extract board and task names from params
   const boardName = removeDelimiter(params.boardId, "-");
   const taskName = removeDelimiter(params.taskId, "-");
 
   // Find the board and task IDs
-  const { boardId, taskId } = await findBoardAndTaskIds(boardName, taskName);
+  const { boardId, taskId } = await findBoardAndTaskIds(
+    user.uid,
+    boardName,
+    taskName
+  );
 
   // If board or task not found, return
   if (!boardId || !taskId) {
@@ -20,9 +28,8 @@ export async function action({ params }) {
   }
 
   // Delete the task
-  await deleteTask(boardId, taskId);
+  await deleteTask(user.uid, boardId, taskId);
 
   // Redirect to the parent directory
   return redirect("..");
 }
-

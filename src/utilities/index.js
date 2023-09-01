@@ -93,13 +93,13 @@ export async function deleteBoard(uid, boardId) {
 }
 
 // Function to delete a task
-export async function deleteTask(boardId, taskId) {
-  await deleteDoc(doc(db, `boards/${boardId}/tasks`, taskId));
+export async function deleteTask(uid, boardId, taskId) {
+  await deleteDoc(doc(db, `users/${uid}/boards/${boardId}/tasks`, taskId));
 }
 
 // Function to find board and task IDs
-export async function findBoardAndTaskIds(boardName, taskName) {
-  const boardSnap = await findBoard(boardName);
+export async function findBoardAndTaskIds(uid, boardName, taskName) {
+  const boardSnap = await findBoard(uid, boardName);
 
   if (boardSnap.empty) {
     return { boardId: null, taskId: null };
@@ -107,7 +107,7 @@ export async function findBoardAndTaskIds(boardName, taskName) {
 
   const boardId = boardSnap.docs[0].id;
 
-  const taskSnap = findTask(boardId, taskName);
+  const taskSnap = await findTask(uid, boardId, taskName);
 
   if (taskSnap.empty) {
     return { boardId: null, taskId: null };
