@@ -4,8 +4,12 @@ import {
   updateTask,
   removeDelimiter,
 } from "../../utilities";
+import { auth } from "../../firebase";
 
 export async function action({ params, request }) {
+  // current user
+  const user = auth.currentUser;
+
   // Get updated task data from the request JSON
   const updatedTaskData = await request.json();
 
@@ -14,7 +18,11 @@ export async function action({ params, request }) {
   const taskName = removeDelimiter(params.taskId, "-");
 
   // Find the board and task IDs
-  const { boardId, taskId } = await findBoardAndTaskIds(boardName, taskName);
+  const { boardId, taskId } = await findBoardAndTaskIds(
+    user.uid,
+    boardName,
+    taskName
+  );
 
   // If board or task not found, return
   if (!boardId || !taskId) {
@@ -23,7 +31,7 @@ export async function action({ params, request }) {
   }
 
   // Update the task in Firestore
-  await updateTask(boardId, taskId, updatedTaskData);
+  await updateTask(user.uid, boardId, taskId, updatedTaskData);
 
   // Redirect to the board
   return redirect(`/board/${params.boardId}`);

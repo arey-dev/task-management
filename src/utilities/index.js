@@ -83,8 +83,11 @@ export async function addTaskToBoard(uid, boardId, taskData) {
 }
 
 // Function to update a task in Firestore
-export async function updateTask(boardId, taskId, updatedTaskData) {
-  await updateDoc(doc(db, `boards/${boardId}/tasks`, taskId), updatedTaskData);
+export async function updateTask(uid, boardId, taskId, updatedTaskData) {
+  await updateDoc(
+    doc(db, `users/${uid}/boards/${boardId}/tasks`, taskId),
+    updatedTaskData
+  );
 }
 
 // Function to delete a board
