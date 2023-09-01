@@ -29,8 +29,11 @@ export async function addUser(user) {
 }
 
 // Function to find a board by name
-export async function findBoard(boardName) {
-  const q = query(collection(db, "boards"), where("name", "==", boardName));
+export async function findBoard(uid, boardName) {
+  const q = query(
+    collection(db, `users/${uid}/boards`),
+    where("name", "==", boardName)
+  );
   return await getDocs(q);
 }
 
@@ -39,6 +42,15 @@ export async function findTask(boardId, taskName) {
     collection(db, `boards/${boardId}/tasks`),
     where("title", "==", taskName)
   );
+  return await getDocs(q);
+}
+
+export async function findTaskByStatus(uid, boardId, columnName) {
+  const q = query(
+    collection(db, `users/${uid}/boards/${boardId}/tasks`),
+    where("status", "==", columnName)
+  );
+
   return await getDocs(q);
 }
 
@@ -62,8 +74,11 @@ export async function updateTaskData(boardId, taskId, subtasks, status) {
 }
 
 // Function to add a task to a specific board
-export async function addTaskToBoard(boardId, taskData) {
-  const tasksCollection = collection(db, `boards/${boardId}/tasks`);
+export async function addTaskToBoard(uid, boardId, taskData) {
+  const tasksCollection = collection(
+    db,
+    `users/${uid}/boards/${boardId}/tasks`
+  );
   await addDoc(tasksCollection, taskData);
 }
 
