@@ -66,8 +66,8 @@ export async function addColumn(uid, boardId, column) {
   });
 }
 
-export async function updateTaskData(boardId, taskId, subtasks, status) {
-  await updateDoc(doc(db, `boards/${boardId}/tasks`, taskId), {
+export async function updateTaskData(uid, boardId, taskId, subtasks, status) {
+  await updateDoc(doc(db, `users/${uid}/boards/${boardId}/tasks`, taskId), {
     subtasks,
     status,
   });

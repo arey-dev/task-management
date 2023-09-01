@@ -1,11 +1,14 @@
 import {
-  findBoard,
-  findTask,
+  findBoardAndTaskIds,
   updateTaskData,
   removeDelimiter,
 } from "../../utilities";
+import { auth } from "../../firebase";
 
 export async function action({ request, params }) {
+  // current user
+  const user = auth.currentUser;
+
   const data = await request.json();
 
   const { status, ...subtasks } = data;
@@ -13,23 +16,20 @@ export async function action({ request, params }) {
   const boardName = removeDelimiter(params.boardId, "-");
   const taskName = removeDelimiter(params.taskId, "-");
 
-  const boardSnap = await findBoard(boardName);
+  // Find the board and task IDs
+  const { boardId, taskId } = await findBoardAndTaskIds(
+    user.uid,
+    boardName,
+    taskName
+  );
 
-  if (boardSnap.empty) {
-    return null; // Return null if board doesn't exist
+  // If board or task not found, return
+  if (!boardId || !taskId) {
+    console.log("Board or task not found");
+    return;
   }
 
-  const boardId = boardSnap.docs[0].id;
-
-  const taskSnap = await findTask(boardId, taskName);
-
-  if (taskSnap.empty) {
-    return null; // Return null if board doesn't exist
-  }
-
-  const taskId = taskSnap.docs[0].id;
-
-  await updateTaskData(boardId, taskId, subtasks, status);
+  await updateTaskData(user.uid, boardId, taskId, subtasks, status);
 
   return null;
 }

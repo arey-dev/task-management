@@ -28,7 +28,7 @@ export function TaskView() {
   const params = useParams();
 
   // get board columns
-  const {columns} = useOutletContext();
+  const { columns } = useOutletContext();
 
   // status dropdown options
   let columnId = 0;
