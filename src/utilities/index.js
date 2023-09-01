@@ -22,6 +22,7 @@ export function removeDelimiter(string, delimiter) {
   return string.split(delimiter).join(" ");
 }
 
+// Function to add user
 export async function addUser(user) {
   const userRef = doc(db, "users", user.uid);
   await setDoc(userRef, { uid: user.uid, email: user.email });
