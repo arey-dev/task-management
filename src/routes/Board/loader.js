@@ -1,19 +1,15 @@
-import { query, collection, where, getDocs } from "firebase/firestore";
-import { db } from "../../firebase";
-import { removeDelimiter } from "../../utilities";
+import { auth } from "../../firebase";
+import { findBoard, findTaskByStatus, removeDelimiter } from "../../utilities";
 
 export async function loader({ params }) {
+  // current user
+  const user = auth.currentUser;
+
   // Extract the board name from params
   const boardName = removeDelimiter(params.boardId, "-");
 
-  // Query for the board using its name
-  const boardQuery = query(
-    collection(db, "boards"),
-    where("name", "==", boardName)
-  );
-
   // Get the board data from the database
-  const boardSnap = await getDocs(boardQuery);
+  const boardSnap = await findBoard(user.uid, boardName);
 
   // If the board doesn't exist, return an empty object
   if (boardSnap.empty) {
@@ -37,11 +33,10 @@ export async function loader({ params }) {
     tasksByColumns[column.name] = [];
 
     // Query for tasks in the current column
-    const tasksQuerySnapshot = await getDocs(
-      query(
-        collection(db, "boards", boardId, "tasks"),
-        where("status", "==", column.name)
-      )
+    const tasksQuerySnapshot = await findTaskByStatus(
+      user.uid,
+      boardId,
+      column.name
     );
 
     // Add tasks to the tasksByColumns object
