@@ -88,8 +88,8 @@ export async function updateTask(boardId, taskId, updatedTaskData) {
 }
 
 // Function to delete a board
-export async function deleteBoard(boardId) {
-  await deleteDoc(doc(db, "boards", boardId));
+export async function deleteBoard(uid, boardId) {
+  await deleteDoc(doc(db, `users/${uid}/boards`, boardId));
 }
 
 // Function to delete a task
