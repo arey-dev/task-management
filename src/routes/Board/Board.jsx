@@ -1,10 +1,11 @@
-import { Outlet, useLoaderData } from "react-router-dom";
+import { Outlet, useLoaderData, useOutletContext } from "react-router-dom";
 import { Flex } from "../../components";
 import { CallToAction } from "../../components";
 import { Column } from "../../components/board";
 import { AddColumnButton } from "../../components/board";
 
 export function Board() {
+  const { user } = useOutletContext();
   const { columns, tasks } = useLoaderData();
 
   return (
@@ -19,7 +20,7 @@ export function Board() {
             />
           ))}
           <AddColumnButton />
-          <Outlet context={columns} />
+          <Outlet context={{ columns, user }} />
         </Flex>
       ) : (
         <CallToAction />

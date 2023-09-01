@@ -15,7 +15,7 @@ import { removeDelimiter } from "../../utilities";
 
 export function EditBoard() {
   // get board columns
-  const OutletContextData = useOutletContext();
+  const { columns: OutletContextData } = useOutletContext();
 
   const params = useParams(); // to read boardId params
 

@@ -4,5 +4,5 @@ import { useAuthState } from "../hooks";
 export function PrivateRoute() {
   const user = useAuthState();
 
-  return user ? <Outlet /> : <Navigate to="/login" />;
+  return user ? <Outlet context={{ user }} /> : <Navigate to="/login" />;
 }

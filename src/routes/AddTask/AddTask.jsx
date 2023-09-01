@@ -18,7 +18,7 @@ let nextSubtasksId = initialSubtasks.length;
 
 export function AddTask() {
   // get board columns
-  const columns = useOutletContext();
+  const { columns } = useOutletContext();
 
   // status dropdown options
   let columnId = 0;
@@ -51,9 +51,7 @@ export function AddTask() {
     navigation.formAction !== navigation.location.pathname;
 
   // set dropdown option (ui only)
-  const [selectedOption, setSelectedOption] = useState(
-    dropdownOptions[0]
-  );
+  const [selectedOption, setSelectedOption] = useState(dropdownOptions[0]);
 
   const [subtasks, setSubtasks] = useState(initialSubtasks);
 

@@ -17,7 +17,7 @@ import { useSubmit } from "react-router-dom";
 
 export function EditTask() {
   // get board columns
-  const columns = useOutletContext();
+  const { columns } = useOutletContext();
 
   // status dropdown options
   let columnId = 0;
