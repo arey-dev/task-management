@@ -55,8 +55,8 @@ export async function findTaskByStatus(uid, boardId, columnName) {
 }
 
 // Function to update the board in Firestore
-export async function updateBoard(boardId, updatedBoardData) {
-  await updateDoc(doc(db, "boards", boardId), updatedBoardData);
+export async function updateBoard(uid, boardId, updatedBoardData) {
+  await updateDoc(doc(db, `users/${uid}/boards`, boardId), updatedBoardData);
 }
 
 export async function addColumn(uid, boardId, column) {
