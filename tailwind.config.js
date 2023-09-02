@@ -22,7 +22,7 @@ export default {
         "secondary": "#FFFFFF",
         "surface": "#2B2C37",
         "background": "#20212C",
-        "lines": "3E3F4E",
+        "lines": "#3E3F4E",
         "on-surface": "#FFFFFF",
       },
       "hover": {
@@ -31,7 +31,7 @@ export default {
         danger: "#FF9898",
       },
       // 0.25 opacity
-      "neutral-1": "#828FA340", 
+      "neutral-1": "#828FA340",
       // 0.10 opacity
       "neutral-2": "#828FA33F",
     },

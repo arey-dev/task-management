@@ -5,7 +5,7 @@ import { Label } from "./Label";
 import { useFormContext } from "react-hook-form";
 
 const classes = {
-  base: "form-input flex-1 w-full py-2 px-4 bg-light-surface text-light-on-surface text-body-lg placeholder-light-on-surface placeholder-opacity-25 border-neutral-1 focus:ring-primary",
+  base: "form-input flex-1 w-full py-2 px-4 bg-light-surface text-light-on-surface text-body-lg placeholder-light-on-surface placeholder-opacity-25 border-neutral-1 focus:ring-primary dark:text-dark-on-surface dark:bg-dark-surface dark:placeholder-on-background",
   state: {
     error: "!border-danger focus:!ring-danger",
     disabled: "text-opacity-25 shadow-inner",
@@ -38,7 +38,12 @@ export function Input({ name, ...props }) {
   return (
     <div className={twJoin("relative", className)}>
       {label && (
-        <Label id={id} className={props["label-sr-only"] && "sr-only"}>
+        <Label
+          id={id}
+          className={`dark:text-dark-on-surface ${
+            props["label-sr-only"] && "sr-only"
+          }`}
+        >
           {label}
         </Label>
       )}
@@ -50,7 +55,7 @@ export function Input({ name, ...props }) {
           classes.base,
           rounded && classes.rounded[rounded],
           errors[name] && classes.state.error,
-          disabled && classes.state.disabled
+          disabled && classes.state.disabled,
         ])}
         disabled={disabled}
         {...register(name, { required: "Can't be empty" })}

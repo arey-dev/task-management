@@ -7,8 +7,9 @@ import { useParams } from "react-router-dom";
 
 export function BoardNav({ boards, onHideSidebar }) {
   const params = useParams();
+
   return (
-    <nav className="min-w-[18.75rem] pt-4 pb-8 border-e border-light-lines bg-light-surface flex flex-col relative z-20 overflow-hidden">
+    <nav className="min-w-[18.75rem] pt-4 pb-8 border-e border-light-lines bg-light-surface flex flex-col relative z-20 overflow-hidden dark:bg-dark-surface dark:border-dark-lines">
       <h2 className="text-heading-sm text-on-background ml-8 mb-[1.125rem]">
         All BOARDS ({boards.length})
       </h2>

@@ -124,11 +124,11 @@ export function EditTask() {
       <Modal>
         <FormProvider {...methods}>
           <Form
-            className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md"
+            className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md dark:bg-dark-surface"
             onSubmit={methods.handleSubmit(onSubmit)}
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-lg">Edit Task</h2>
+            <h2 className="text-lg text-light-on-surface dark:text-dark-on-surface">Edit Task</h2>
 
             <Input
               label="Title"
@@ -146,7 +146,7 @@ export function EditTask() {
             />
 
             <section>
-              <h3 className="mb-2 text-body-md text-on-background">Subtasks</h3>
+              <h3 className="mb-2 text-body-md text-on-background dark:text-dark-on-surface">Subtasks</h3>
               {subtasks.map((subtask, index) => (
                 <RemovableInput
                   key={subtask.id}

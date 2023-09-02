@@ -29,7 +29,7 @@ export function DropdownMenu({
       {isOpen && (
         <div
           className={twJoin(
-            "absolute top-full w-48 bg-light-surface p-4 rounded-lg z-50 mt-[1.375rem] shadow-md",
+            "absolute top-full w-48 bg-light-surface p-4 rounded-lg z-50 mt-[1.375rem] shadow-md dark:bg-dark-background",
             className
           )}
         >
@@ -64,7 +64,7 @@ export function DropdownMenu({
             onClick={() => {
               signOut(auth);
             }}
-            className="block text-body-lg text-dark-background cursor-pointer"
+            className="block text-body-lg text-light-on-surface cursor-pointer dark:text-dark-on-surface"
           >
             Sign Out
           </button>

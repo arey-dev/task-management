@@ -21,8 +21,8 @@ export function DeleteTask() {
     <Modal>
       <Form
         method="post"
-        className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md"
         onClick={(e) => e.stopPropagation()}
+        className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md dark:bg-dark-surface"
       >
         <h2 className="text-heading-lg text-danger">Delete this Task?</h2>
         <p className="text-body-lg text-on-background">

@@ -5,7 +5,7 @@ import { Label } from "./Label";
 import { useFormContext } from "react-hook-form";
 
 const classes = {
-  base: "flex-1 h-28 appearance-none border w-full py-2 px-4 bg-light-surface text-light-on-surface text-body-lg focus:outline-none focus:ring-1 focus:ring-primary  placeholder-light-on-surface placeholder-opacity-25 border-neutral-1",
+  base: "flex-1 h-28 appearance-none border w-full py-2 px-4 bg-light-surface text-light-on-surface text-body-lg focus:outline-none focus:ring-1 focus:ring-primary  placeholder-light-on-surface placeholder-opacity-25 border-neutral-1 dark:bg-dark-surface dark:text-dark-on-surface dark:placeholder-on-background",
   noResize: "resize-none",
   disable: "text-opacity-25",
   rounded: {
@@ -34,7 +34,11 @@ export function TextArea({ name, ...props }) {
 
   return (
     <div className={twJoin("relative", className)}>
-      {label && <Label id={id}>{label}</Label>}
+      {label && (
+        <Label className="dark:text-dark-on-surface" id={id}>
+          {label}
+        </Label>
+      )}
 
       <textarea
         id={id}

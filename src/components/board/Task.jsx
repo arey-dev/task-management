@@ -22,9 +22,9 @@ export function Task({ task }) {
           state: task,
         })
       }
-      className="bg-light-surface rounded-lg task-shadow px-4 py-6 last-of-type:last:mb-12 cursor-pointer text-light-on-surface hover:text-primary"
+      className="bg-light-surface rounded-lg task-shadow px-4 py-6 last-of-type:last:mb-12 cursor-pointer text-light-on-surface hover:text-primary dark:bg-dark-surface"
     >
-      <h3 className="text-heading-md mb-2">{title}</h3>
+      <h3 className="text-heading-md text-light-on-surface mb-2 dark:text-dark-on-surface">{title}</h3>
       {subtaskCount > 0 && (
         <p className="text-body-md text-on-background">
           <span>{subtaskCompleted}</span> of <span>{subtaskCount}</span>{" "}

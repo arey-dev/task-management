@@ -5,9 +5,11 @@ import { DropdownMenu } from "./ui";
 import { removeDelimiter } from "../utilities";
 import { Link, useMatch, useParams } from "react-router-dom";
 
-export function AppBar() {
+// eslint-disable-next-line no-unused-vars
+export function AppBar({ boards }) {
   // get boardId params from the URL;
   const { boardId } = useParams();
+
   const match = useMatch("/");
 
   let title;
@@ -16,20 +18,26 @@ export function AppBar() {
     title = removeDelimiter(boardId, "-");
   }
 
-  // TODO: read the :boardId params from previous history stack if possible
-  // and assign it to title if boardId doesn't exists
+  // used to disable add task button if board has no column
+  const board = boards.find((board) => board.name === title);
 
   return (
     <Flex
       as="nav"
-      className="w-full items-center border border-light-lines px-6 bg-light-surface"
+      className="w-full items-center bg-light-surface border border-light-lines px-6 dark:border-dark-lines dark:bg-dark-surface"
     >
-      <h2 className="text-heading-xl">{title}</h2>
+      <h2 className="text-heading-xl text-light-on-surface dark:text-dark-on-surface">
+        {title}
+      </h2>
       <Link
         to={`board/${boardId}/add-task`}
         className="mr-2 ml-auto rounded-full"
       >
-        <Button variant="primary" disabled={match ? true : false} size="large">
+        <Button
+          variant="primary"
+          disabled={match || board.columns.length <= 0 ? true : false}
+          size="large"
+        >
           + Add New Task
         </Button>
       </Link>

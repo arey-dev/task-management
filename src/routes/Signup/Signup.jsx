@@ -32,10 +32,12 @@ export function Signup() {
   return (
     <FormProvider {...methods}>
       <Form
-        className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md"
+        className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md border dark:bg-dark-surface dark:border-dark-lines"
         onSubmit={methods.handleSubmit(onSubmit)}
       >
-        <h2 className="text-lg">Signup</h2>
+        <h2 className="text-lg text-light-on-surface dark:text-dark-on-surface">
+          Signup
+        </h2>
 
         <Input
           type="email"
@@ -52,7 +54,7 @@ export function Signup() {
           disabled={isRedirecting || isSubmitting}
         />
 
-        <p className="text-sm">
+        <p className="text-sm text-light-on-surface dark:text-dark-on-surface">
           Already have an account?{" "}
           {
             <Link

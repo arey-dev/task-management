@@ -13,7 +13,7 @@ const classes = {
     primary:
       "bg-primary hover:bg-hover-primary focus:ring-2 focus:ring-primary text-on-primary",
     secondary:
-      "bg-light-secondary hover:bg-hover-secondary focus:ring-2 focus:ring-light-secondary text-on-secondary",
+      "bg-light-secondary hover:bg-hover-secondary focus:ring-2 focus:ring-light-secondary text-on-secondary dark:bg-dark-secondary",
     danger:
       "bg-danger hover:bg-hover-danger focus:ring-2 focus:ring-danger text-on-danger",
   },

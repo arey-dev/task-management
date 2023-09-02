@@ -25,7 +25,7 @@ nav ul li a.pending {
 
   body {
     @apply min-h-screen;
-    @apply bg-light-background;
+    @apply bg-light-background dark:bg-dark-background;
     text-rendering: optimizeSpeed;
   }
 

@@ -10,8 +10,8 @@ export function Board() {
 
   return (
     <>
-      {columns ? (
-        <Flex as="main" className="w-full px-6 pt-6 gap-6 overflow-auto">
+      {columns.length > 0 ? (
+        <Flex as="main" className="w-full px-6 pt-6 gap-6 overflow-hidden">
           {columns.map((column) => (
             <Column
               key={column.name}
@@ -20,11 +20,11 @@ export function Board() {
             />
           ))}
           <AddColumnButton />
-          <Outlet context={{ columns, user }} />
         </Flex>
       ) : (
         <CallToAction />
       )}
+      <Outlet context={{ columns, user }} />
     </>
   );
 }

@@ -18,9 +18,9 @@ export function Root() {
     <>
       <Flex className="h-24">
         <Logo isSidebarOpen={showSidebar} />
-        <AppBar />
+        <AppBar boards={boardList} />
       </Flex>
-      <Flex className="h-[calc(100vh-6rem)] relative border-x border-light-lines">
+      <Flex className="h-[calc(100vh-6rem)] relative border-x border-light-lines dark:border-dark-lines">
         {showSidebar ? (
           <BoardNav boards={boardList} onHideSidebar={handleSidebarToggle} />
         ) : (

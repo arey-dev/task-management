@@ -1,5 +1,5 @@
 import { useScreenSize } from "./useScreenSize";
-import { useDarkMode } from "./useDarkMode";
+import { useDarkMode, useLocalStorage } from "./useDarkMode";
 import { useAuthState } from "./useAuthState";
 
-export { useScreenSize, useDarkMode, useAuthState };
+export { useScreenSize, useDarkMode, useLocalStorage, useAuthState };
