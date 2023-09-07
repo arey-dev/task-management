@@ -32,7 +32,7 @@ export function Signup() {
   return (
     <FormProvider {...methods}>
       <Form
-        className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md border dark:bg-dark-surface dark:border-dark-lines"
+        className="flex flex-col w-[30rem] gap-6 bg-light-surface p-8 rounded-md border border-light-lines dark:bg-dark-surface dark:border-dark-lines"
         onSubmit={methods.handleSubmit(onSubmit)}
       >
         <h2 className="text-lg text-light-on-surface dark:text-dark-on-surface">
