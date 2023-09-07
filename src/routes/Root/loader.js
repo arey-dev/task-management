@@ -1,5 +1,5 @@
-import { collection, getDocs } from "firebase/firestore";
-import { auth, db } from "../../firebase";
+import { auth } from "../../firebase";
+import { getAllBoards } from "../../utilities";
 
 export async function loader() {
   // current user
@@ -20,10 +20,4 @@ export async function loader() {
 
   // Return the array of board data
   return { boardList };
-}
-
-// Function to get a snapshot of all boards from the database
-async function getAllBoards(uid) {
-  const querySnapshot = await getDocs(collection(db, `users/${uid}/boards`));
-  return querySnapshot;
 }
