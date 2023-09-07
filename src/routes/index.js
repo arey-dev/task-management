@@ -1,4 +1,4 @@
-import { Board } from "./Board/Board";
+import { PrivateRoute } from "./PrivateRoute";
 import { Welcome } from "./Welcome";
 
-export { Board, Welcome };
+export { Welcome, PrivateRoute };
