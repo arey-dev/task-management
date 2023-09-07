@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-export function ColumnHeader({ name, taskCount }) {
+export function ColumnHeader({ name, taskCount, ...props }) {
   return (
-    <div className="flex gap-3 pb-6">
+    <div className="flex gap-3 pb-6" {...props}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="15"
