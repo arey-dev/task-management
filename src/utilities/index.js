@@ -22,6 +22,20 @@ export function removeDelimiter(string, delimiter) {
   return string.split(delimiter).join(" ");
 }
 
+// Function to get a snapshot of all boards from the database
+export async function getAllBoards(uid) {
+  const querySnapshot = await getDocs(collection(db, `users/${uid}/boards`));
+  return querySnapshot;
+}
+
+// Function to get a snapshot of all task of a board from the database
+export async function getBoardTasks(uid, boardId) {
+  const querySnapshot = await getDocs(
+    collection(db, `users/${uid}/boards/${boardId}/tasks`)
+  );
+  return querySnapshot;
+}
+
 // Function to add user
 export async function addUser(user) {
   const userRef = doc(db, "users", user.uid);
