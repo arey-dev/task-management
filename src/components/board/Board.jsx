@@ -16,7 +16,7 @@ import {
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 
 export function Board() {
-  const { columns: columnData, boardTasks } = useRouteLoaderData();
+  const { columns: columnData, boardTasks } = useRouteLoaderData("kanban");
 
   console.log("loader data", columnData, boardTasks);
 
