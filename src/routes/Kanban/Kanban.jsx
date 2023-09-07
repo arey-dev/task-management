@@ -1,21 +1,21 @@
-// import {
-//   Outlet,
-//   useLoaderData,
-//   useOutletContext,
-//   useParams,
-// } from "react-router-dom";
-// import { Board } from "../../components/board";
+import {
+  Outlet,
+  useLoaderData,
+  useOutletContext,
+  useParams,
+} from "react-router-dom";
+import { Board } from "../../components/board";
 
-// export function Kanban() {
-//   const { user } = useOutletContext();
-//   const { columns } = useLoaderData();
+export function Kanban() {
+  const { user } = useOutletContext();
+  const { columns } = useLoaderData();
 
-//   const params = useParams();
+  const params = useParams();
 
-//   return (
-//     <>
-//       <Board key={params.boardId} />
-//       <Outlet context={{ columns, user }} />
-//     </>
-//   );
-// }
+  return (
+    <>
+      <Board key={params.boardId} />
+      <Outlet context={{ columns, user }} />
+    </>
+  );
+}

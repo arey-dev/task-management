@@ -13,18 +13,21 @@ export async function loader({ params }) {
 
   // If the board doesn't exist, return an empty object
   if (boardSnap.empty || !user) {
-    console.log("Board not found");
-    return { columns: [], tasks: {} };
+    console.log("Board Not Found");
+    return { columns: [], tasks: [] };
   }
 
   let boardId;
   let boardData;
+
   boardSnap.forEach((doc) => {
     boardId = doc.id;
     boardData = doc.data();
   });
 
-  // Initialize an object to store tasks
+  console.log(boardData.columns);
+
+  //  Initialize empty array to store tasks
   const boardTasks = [];
 
   const tasksSnap = await getBoardTasks(user.uid, boardId);
@@ -33,6 +36,8 @@ export async function loader({ params }) {
   tasksSnap.forEach((doc) => {
     boardTasks.push(doc.data());
   });
+
+  console.log(boardTasks);
 
   // Return the categorized tasks along with column names
   return { columns: boardData.columns, boardTasks };

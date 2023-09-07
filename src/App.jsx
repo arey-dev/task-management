@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Welcome, PrivateRoute } from "./routes";
 import { Root, loader as RootLoader } from "./routes/Root";
-import { Kanban, loader as KanbanLoader } from "./routes/Kanban";
 import { AddBoard, action as AddBoardAction } from "./routes/AddBoard";
 import { EditBoard, action as EditBoardAction } from "./routes/EditBoard";
 import { DeleteBoard, action as DeleteBoardAction } from "./routes/DeleteBoard";
@@ -13,6 +12,7 @@ import { TaskView, action as TaskViewAction } from "./routes/TaskView";
 import { Login, action as LoginAction } from "./routes/Login";
 import { Signup, action as SignupAction } from "./routes/Signup";
 import { AuthLayout, loader as AuthLayoutLoader } from "./routes/AuthLayout";
+import { Kanban, loader as KanbanLoader } from "./routes/Kanban";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +45,7 @@ const router = createBrowserRouter([
             path: "board/:boardId",
             element: <Kanban />,
             loader: KanbanLoader,
+            id: "kanban",
             children: [
               {
                 path: "add-board",
