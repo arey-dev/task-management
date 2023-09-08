@@ -33,30 +33,29 @@ export function Column({ column, tasks }) {
     return (
       <div
         ref={setNodeRef}
-        className="min-w-[17.5rem] h-[4/5] bg-light-background rounded-lg opacity-25 border border-light-lines dark:bg-dark-background dark:border-dark-lines"
+        style={style}
+        className="min-w-[17.5rem] h-[4/5] bg-light-background rounded-lg opacity-60 border border-light-lines dark:bg-dark-background dark:border-dark-lines"
       ></div>
     );
   }
 
   return (
-    <>
-      <section ref={setNodeRef} style={style} className="min-w-[17.5rem]">
-        <ColumnHeader
-          {...attributes}
-          {...listeners}
-          name={column.name}
-          taskCount={tasks ? tasks.length : 0}
-        />
-        {tasks && (
-          <TasksContainer>
-            <SortableContext items={taskIds}>
-              {tasks.map((task) => (
-                <Task key={task.title} task={task} />
-              ))}
-            </SortableContext>
-          </TasksContainer>
-        )}
-      </section>
-    </>
+    <section ref={setNodeRef} style={style} className="min-w-[17.5rem]">
+      <ColumnHeader
+        {...attributes}
+        {...listeners}
+        name={column.name}
+        taskCount={tasks ? tasks.length : 0}
+      />
+      {tasks && (
+        <TasksContainer>
+          <SortableContext items={taskIds}>
+            {tasks.map((task) => (
+              <Task key={task.title} task={task} />
+            ))}
+          </SortableContext>
+        </TasksContainer>
+      )}
+    </section>
   );
 }

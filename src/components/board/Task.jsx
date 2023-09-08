@@ -38,6 +38,7 @@ export function Task({ task }) {
     return (
       <div
         ref={setNodeRef}
+        style={style}
         className="bg-light-surface rounded-lg task-shadow px-4 py-10 last-of-type:last:mb-12
       cursor-pointer text-light-on-surface hover:text-primary
       dark:bg-dark-surface"
