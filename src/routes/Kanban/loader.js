@@ -25,8 +25,6 @@ export async function loader({ params }) {
     boardData = doc.data();
   });
 
-  console.log(boardData.columns);
-
   //  Initialize empty array to store tasks
   const boardTasks = [];
 
@@ -36,8 +34,6 @@ export async function loader({ params }) {
   tasksSnap.forEach((doc) => {
     boardTasks.push(doc.data());
   });
-
-  console.log(boardTasks);
 
   // Return the categorized tasks along with column names
   return { columns: boardData.columns, boardTasks };
