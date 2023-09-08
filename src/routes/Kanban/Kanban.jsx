@@ -14,7 +14,7 @@ export function Kanban() {
 
   return (
     <>
-      <Board key={params.boardId} />
+      <Board key={params.boardId} boardId={params.boardId} />
       <Outlet context={{ columns, user }} />
     </>
   );

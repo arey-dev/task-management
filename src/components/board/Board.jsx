@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { useRouteLoaderData } from "react-router-dom";
@@ -18,13 +19,9 @@ import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 export function Board() {
   const { columns: columnData, boardTasks } = useRouteLoaderData("kanban");
 
-  console.log("loader data", columnData, boardTasks);
-
   const [columns, setColumns] = useState(columnData);
 
   const [tasks, setTasks] = useState(boardTasks);
-
-  console.log("state data", columns, tasks);
 
   const columnId = useMemo(() => columns.map((col) => col.name), [columns]);
 
@@ -41,8 +38,8 @@ export function Board() {
 
   const onDragStart = (event) => {
     if (event.active.data.current?.type === "Column") {
-      console.log(event.active.data.current);
       setActiveColumn(event.active.data.current.column);
+      return;
     }
 
     if (event.active.data.current?.type === "Task") {
@@ -93,6 +90,7 @@ export function Board() {
 
     if (!isActiveATask) return;
 
+    // dropping a Task over a task
     if (isActiveATask && isOverATask) {
       setTasks((tasks) => {
         const activeIndex = tasks.findIndex((t) => t.title === activeId);
@@ -107,18 +105,17 @@ export function Board() {
       });
     }
 
-    // const isOverAColumn = over.data.current?.type === "Column";
+    const isOverAColumn = over.data.current?.type === "Column";
 
-    // // Im dropping a Task over a column
-    // if (isActiveATask && isOverAColumn) {
-    //   setTasks((tasks) => {
-    //     const activeIndex = tasks.findIndex((t) => t.title === activeId);
+    // dropping a Task over a column
+    if (isActiveATask && isOverAColumn) {
+      setTasks((tasks) => {
+        const activeIndex = tasks.findIndex((t) => t.title === activeId);
 
-    //     tasks[activeIndex].status = overId;
-    //     console.log("DROPPING TASK OVER COLUMN", { activeIndex });
-    //     return arrayMove(tasks, activeIndex, activeIndex);
-    //   });
-    // }
+        tasks[activeIndex].status = overId;
+        return arrayMove(tasks, activeIndex, activeIndex);
+      });
+    }
   };
 
   return (

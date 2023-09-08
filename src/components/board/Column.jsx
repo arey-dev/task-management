@@ -7,7 +7,6 @@ import { CSS } from "@dnd-kit/utilities";
 import { useMemo } from "react";
 
 export function Column({ column, tasks }) {
-
   const {
     setNodeRef,
     attributes,
@@ -32,7 +31,10 @@ export function Column({ column, tasks }) {
 
   if (isDragging) {
     return (
-      <div className="min-w-[17.5rem] h-[4/5] bg-light-background rounded-lg opacity-25 border border-light-lines dark:bg-dark-background dark:border-dark-lines"></div>
+      <div
+        ref={setNodeRef}
+        className="min-w-[17.5rem] h-[4/5] bg-light-background rounded-lg opacity-25 border border-light-lines dark:bg-dark-background dark:border-dark-lines"
+      ></div>
     );
   }
 
