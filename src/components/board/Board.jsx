@@ -11,32 +11,51 @@ import {
   DndContext,
   DragOverlay,
   PointerSensor,
+  TouchSensor,
   useSensor,
   useSensors,
+  closestCenter,
 } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 
 export function Board() {
+  // data from loader
   const { columns: columnData, boardTasks } = useRouteLoaderData("kanban");
 
+  // store columns from loader in a state to be used in dnd
   const [columns, setColumns] = useState(columnData);
 
+  // set column names as IDs for sortable context
+  const columnIds = useMemo(() => columns.map((col) => col.name), [columns]);
+
+  // store tasks from loader in a state to be used in dnd
   const [tasks, setTasks] = useState(boardTasks);
 
-  const columnId = useMemo(() => columns.map((col) => col.name), [columns]);
-
+  // to identify which column is being dragged
   const [activeColumn, setActiveColumn] = useState(null);
+
+  // to identify which task is being dragged
   const [activeTask, setActiveTask] = useState(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
+      // Require the mouse to move by 10 pixels before activating
       activationConstraint: {
         distance: 10,
+      },
+    }),
+    useSensor(TouchSensor, {
+      // Press delay of 250ms, with tolerance of 5px of movement
+      activationConstraint: {
+        delay: 250,
+        tolerance: 5,
       },
     })
   );
 
-  const onDragStart = (event) => {
+  // store in a state the item that is being dragged,
+  // depending on its type
+  const handleDragStart = (event) => {
     if (event.active.data.current?.type === "Column") {
       setActiveColumn(event.active.data.current.column);
       return;
@@ -48,71 +67,69 @@ export function Board() {
     }
   };
 
-  const onDragEnd = (event) => {
+  // a handler after a drag finishes
+  const handleDragEnd = (event) => {
+    // reset any active draggable to avoid weird behaviors
     setActiveColumn(null);
     setActiveTask(null);
 
+    // active: item that is being dragged
+    // over: item (droppable) under the the active item
     const { active, over } = event;
 
-    if (!over) {
-      return;
-    }
-
-    const activeColumnId = active.id;
-    const overColumnId = over.id;
-
-    if (activeColumnId === overColumnId) return;
-
     setColumns((columns) => {
-      const activeColumnIndex = columns.findIndex(
-        (col) => col.name === activeColumnId
-      );
+      const oldColumnIndex = columns.findIndex((col) => col.name === active.id);
 
-      const overColumnIndex = columns.findIndex(
-        (col) => col.name === overColumnId
-      );
+      const newColumnIndex = columns.findIndex((col) => col.name === over.id);
 
-      return arrayMove(columns, activeColumnIndex, overColumnIndex);
+      // change the positions of old and new column after dragging
+      return arrayMove(columns, oldColumnIndex, newColumnIndex);
     });
   };
 
-  const onDragOver = (event) => {
+  // a handler when a draggable item is over a droppable container
+  const handleDragOver = (event) => {
     const { active, over } = event;
-    if (!over) return;
 
-    const activeId = active.id;
-    const overId = over.id;
-
-    if (activeId === overId) return;
-
+    // is draggable item a task?
     const isActiveATask = active.data.current?.type === "Task";
+
+    // is droppable container a task?
     const isOverATask = over.data.current?.type === "Task";
 
-    if (!isActiveATask) return;
+    // is droppable container a column?
+    const isOverAColumn = over.data.current?.type === "Column";
 
-    // dropping a Task over a task
+    // dropping a Task over a Task (droppable)
     if (isActiveATask && isOverATask) {
       setTasks((tasks) => {
-        const activeIndex = tasks.findIndex((t) => t.title === activeId);
-        const overIndex = tasks.findIndex((t) => t.title === overId);
+        const oldIndex = tasks.findIndex((task) => task.title === active.id);
 
-        if (tasks[activeIndex].status != tasks[overIndex].status) {
-          tasks[activeIndex].status = tasks[overIndex].status;
-          return arrayMove(tasks, activeIndex, overIndex - 1);
+        const newIndex = tasks.findIndex((task) => task.title === over.id);
+
+        // change the status of a task when
+        // if dragged over a task of different status
+        if (tasks[oldIndex].status != tasks[newIndex].status) {
+          tasks[oldIndex].status = tasks[newIndex].status;
+
+          return arrayMove(tasks, oldIndex, newIndex - 1);
         }
 
-        return arrayMove(tasks, activeIndex, overIndex);
+        // if a task is being dragged over a task
+        // of the same status, just switch places
+        return arrayMove(tasks, oldIndex, newIndex);
       });
     }
-
-    const isOverAColumn = over.data.current?.type === "Column";
 
     // dropping a Task over a column
     if (isActiveATask && isOverAColumn) {
       setTasks((tasks) => {
-        const activeIndex = tasks.findIndex((t) => t.title === activeId);
+        const activeIndex = tasks.findIndex((t) => t.title === active.id);
 
-        tasks[activeIndex].status = overId;
+        // change the status of the task based
+        // on the column it is being dragged over
+        tasks[activeIndex].status = over.id;
+
         return arrayMove(tasks, activeIndex, activeIndex);
       });
     }
@@ -123,12 +140,13 @@ export function Board() {
       {columns.length > 0 ? (
         <DndContext
           sensors={sensors}
-          onDragStart={onDragStart}
-          onDragEnd={onDragEnd}
-          onDragOver={onDragOver}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+          onDragOver={handleDragOver}
+          collisionDetection={closestCenter}
         >
           <Flex as="main" className="w-full px-6 pt-6 gap-6 overflow-scroll">
-            <SortableContext items={columnId}>
+            <SortableContext items={columnIds}>
               {columns.map((column) => (
                 <Column
                   key={column.name}
