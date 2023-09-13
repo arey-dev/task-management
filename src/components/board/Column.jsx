@@ -27,6 +27,7 @@ export function Column({ column, tasks }) {
     transform: CSS.Transform.toString(transform),
   };
 
+  // Set task names as IDs for sortable context
   const taskIds = useMemo(() => tasks.map((task) => task.title), [tasks]);
 
   if (isDragging) {
