@@ -87,6 +87,12 @@ export async function updateTaskData(uid, boardId, taskId, subtasks, status) {
   });
 }
 
+export async function updateTaskStatus(uid, boardId, taskId, status) {
+  await updateDoc(doc(db, `users/${uid}/boards/${boardId}/tasks`, taskId), {
+    status,
+  });
+}
+
 // Function to add a task to a specific board
 export async function addTaskToBoard(uid, boardId, taskData) {
   const tasksCollection = collection(
