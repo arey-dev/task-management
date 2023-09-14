@@ -91,4 +91,12 @@ nav ul li a.pending {
       rgba(233, 239, 250, 0.5) 100%
     );
   }
+
+  .bg-dark-add-column {
+    background: linear-gradient(
+      180deg,
+      rgba(43, 44, 55, 0.25) 0%,
+      rgba(43, 44, 55, 0.13) 100%
+    );
+  }
 }
