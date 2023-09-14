@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* links */
 nav ul li a:hover {
   background-color: theme("colors.light.secondary");
   color: theme("colors.on-secondary");
@@ -15,6 +16,29 @@ nav ul li a.active {
 nav ul li a.pending {
   background-color: theme("colors.hover.secondary");
   color: theme("colors.on-primary");
+}
+
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* overriding some Tailwind preflight styles */
