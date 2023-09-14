@@ -13,6 +13,7 @@
     "@dnd-kit/core": "^6.0.8",
     "@dnd-kit/sortable": "^7.0.2",
     "@dnd-kit/utilities": "^3.2.1",
+    "@rooks/use-debounce": "^4.11.2",
     "firebase": "^10.1.0",
     "firebase-admin": "^11.10.1",
     "react": "^18.2.0",
