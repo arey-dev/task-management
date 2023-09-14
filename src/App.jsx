@@ -12,7 +12,11 @@ import { TaskView, action as TaskViewAction } from "./routes/TaskView";
 import { Login, action as LoginAction } from "./routes/Login";
 import { Signup, action as SignupAction } from "./routes/Signup";
 import { AuthLayout, loader as AuthLayoutLoader } from "./routes/AuthLayout";
-import { Kanban, loader as KanbanLoader } from "./routes/Kanban";
+import {
+  Kanban,
+  loader as KanbanLoader,
+  action as KanbanAction,
+} from "./routes/Kanban";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +49,7 @@ const router = createBrowserRouter([
             path: "board/:boardId",
             element: <Kanban />,
             loader: KanbanLoader,
+            action: KanbanAction,
             id: "kanban",
             children: [
               {
