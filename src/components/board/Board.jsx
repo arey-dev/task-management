@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState, useMemo } from "react";
 import { createPortal } from "react-dom";
-import { useRouteLoaderData } from "react-router-dom";
+import { useFetcher, useParams, useRouteLoaderData } from "react-router-dom";
 import { Flex } from "../Flex";
 import { AddColumnButton } from "./AddColumnButton";
 import { Column } from "./Column";
@@ -17,6 +17,7 @@ import {
   closestCenter,
 } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
+import useDebounce from "@rooks/use-debounce";
 
 export function Board() {
   // data from loader
@@ -36,6 +37,12 @@ export function Board() {
 
   // to identify which task is being dragged
   const [activeTask, setActiveTask] = useState(null);
+
+  const fetcher = useFetcher();
+
+  const debounceSubmit = useDebounce(fetcher.submit, 500);
+
+  const params = useParams();
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -109,8 +116,16 @@ export function Board() {
 
         // change the status of a task when
         // if dragged over a task of different status
-        if (tasks[oldIndex].status != tasks[newIndex].status) {
+        if (tasks[oldIndex].status !== tasks[newIndex].status) {
           tasks[oldIndex].status = tasks[newIndex].status;
+
+          const data = tasks[oldIndex];
+
+          debounceSubmit(JSON.stringify(data), {
+            method: "post",
+            action: `/board/${params.boardId}`,
+            encType: "application/json",
+          });
 
           return arrayMove(tasks, oldIndex, newIndex - 1);
         }
@@ -129,6 +144,14 @@ export function Board() {
         // change the status of the task based
         // on the column it is being dragged over
         tasks[activeIndex].status = over.id;
+
+        const data = tasks[activeIndex];
+
+        debounceSubmit(JSON.stringify(data), {
+          method: "post",
+          action: `/board/${params.boardId}`,
+          encType: "application/json",
+        });
 
         return arrayMove(tasks, activeIndex, activeIndex);
       });
