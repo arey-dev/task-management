@@ -1,21 +1,15 @@
-import {
-  Outlet,
-  useLoaderData,
-  useOutletContext,
-  useParams,
-} from "react-router-dom";
+import { Outlet, useLoaderData, useParams } from "react-router-dom";
 import { Board } from "../../components/board";
 
 export function Kanban() {
-  const { user } = useOutletContext();
-  const { columns } = useLoaderData();
+  const { columns, boardId } = useLoaderData();
 
   const params = useParams();
 
   return (
     <>
-      <Board key={params.boardId} boardId={params.boardId} />
-      <Outlet context={{ columns, user }} />
+      <Board key={params.boardId} boardId={boardId} />
+      <Outlet context={{ columns }} />
     </>
   );
 }
