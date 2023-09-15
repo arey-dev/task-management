@@ -19,5 +19,5 @@ export async function loader() {
   }
 
   // Return the array of board data
-  return { boardList };
+  return { boardList, user };
 }
