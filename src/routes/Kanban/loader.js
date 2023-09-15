@@ -1,5 +1,5 @@
 import { auth } from "../../firebase";
-import { findBoard, getBoardTasks, removeDelimiter } from "../../utilities";
+import { findBoard, removeDelimiter } from "../../utilities";
 
 export async function loader({ params }) {
   // current user
@@ -25,16 +25,6 @@ export async function loader({ params }) {
     boardData = doc.data();
   });
 
-  //  Initialize empty array to store tasks
-  const boardTasks = [];
-
-  const tasksSnap = await getBoardTasks(user.uid, boardId);
-
-  // Populate the boardList array with data from each board
-  tasksSnap.forEach((doc) => {
-    boardTasks.push(doc.data());
-  });
-
   // Return the categorized tasks along with column names
-  return { columns: boardData.columns, boardTasks };
+  return { columns: boardData.columns, boardId };
 }
