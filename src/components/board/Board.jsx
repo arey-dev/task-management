@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState, useMemo } from "react";
 import { createPortal } from "react-dom";
-import { useFetcher, useParams, useRouteLoaderData } from "react-router-dom";
+import { useFetcher, useParams } from "react-router-dom";
 import { Flex } from "../Flex";
 import { AddColumnButton } from "./AddColumnButton";
 import { Column } from "./Column";
@@ -18,19 +18,15 @@ import {
 } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import useDebounce from "@rooks/use-debounce";
+import { useBoardData } from "../../hooks";
 
-export function Board() {
-  // data from loader
-  const { columns: columnData, boardTasks } = useRouteLoaderData("kanban");
+export function Board({ boardId }) {
+  const params = useParams();
 
-  // store columns from loader in a state to be used in dnd
-  const [columns, setColumns] = useState(columnData);
+  const { columns, tasks, setTasks, setColumns } = useBoardData(boardId);
 
   // set column names as IDs for sortable context
-  const columnIds = useMemo(() => columns.map((col) => col.name), [columns]);
-
-  // store tasks from loader in a state to be used in dnd
-  const [tasks, setTasks] = useState(boardTasks);
+  const columnIds = useMemo(() => columns?.map((col) => col.name), [columns]);
 
   // to identify which column is being dragged
   const [activeColumn, setActiveColumn] = useState(null);
@@ -41,8 +37,6 @@ export function Board() {
   const fetcher = useFetcher();
 
   const debounceSubmit = useDebounce(fetcher.submit, 500);
-
-  const params = useParams();
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -160,7 +154,7 @@ export function Board() {
 
   return (
     <>
-      {columns.length > 0 ? (
+      {columns ? (
         <DndContext
           sensors={sensors}
           onDragStart={handleDragStart}
