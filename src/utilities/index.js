@@ -29,12 +29,12 @@ export async function getAllBoards(uid) {
 }
 
 // Function to get a snapshot of all task of a board from the database
-export async function getBoardTasks(uid, boardId) {
-  const querySnapshot = await getDocs(
-    collection(db, `users/${uid}/boards/${boardId}/tasks`)
-  );
-  return querySnapshot;
-}
+// export async function getBoardTasks(uid, boardId) {
+//   const querySnapshot = await getDocs(
+//     collection(db, `users/${uid}/boards/${boardId}/tasks`)
+//   );
+//   return querySnapshot;
+// }
 
 // Function to add user
 export async function addUser(user) {
