@@ -5,6 +5,7 @@ export default {
   darkMode: "class",
   theme: {
     colors: {
+      "transparent": "transparent",
       "primary": "#635FC7",
       "danger": "#EA5555",
       "on-danger": "#FFFFFF",
