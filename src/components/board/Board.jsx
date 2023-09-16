@@ -19,6 +19,7 @@ import {
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import useDebounce from "@rooks/use-debounce";
 import { useBoardData } from "../../hooks";
+import { Spinner } from "../ui";
 
 export function Board({ boardId }) {
   const params = useParams();
@@ -152,6 +153,11 @@ export function Board({ boardId }) {
     }
   };
 
+  // return CTA if length of column is 0
+  if (columns && columns.length <= 0) {
+    return <CallToAction />;
+  }
+
   return (
     <>
       {columns ? (
@@ -191,7 +197,7 @@ export function Board({ boardId }) {
           )}
         </DndContext>
       ) : (
-        <CallToAction />
+        <Spinner />
       )}
     </>
   );
